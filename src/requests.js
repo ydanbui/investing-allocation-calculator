@@ -22,6 +22,11 @@ const getLastTime = () => {
     // Get the current time in UTC
     const time = moment().utc()
 
+    // Testing different times
+    // const time = moment("2020-04-13 06:36", "YYYY-MM-DD HH:mm").utc() // local PST time 24 hrs
+
+    // console.log(typeof time.day())
+
     // Get the current hour in UTC
     const currentHour = time.hour()
 
@@ -31,23 +36,47 @@ const getLastTime = () => {
     // Set the current minute rounded down to the nearest 5 or 10
     time.minute(currentMinute - (currentMinute%5))
 
-    // If the current hour is after the market is closed (this is in UTC time) but still same day
-    if (currentHour >= 20) {
-        // Set the time to be the market close
+    // If it's currently Sunday
+    if (time.day() === 0) {
+        // Set the time to be last Friday at market close
+        time.day(-2)
         time.minute(0)
         time.hour(20)
-    } else if (currentHour < 13 || (currentHour === 13 && currentMinute < 35)){
-        // If market is before hours
+    } else if (time.day() === 6) {
+        // If it's currently Saturday
 
-        // Set the time to be the preivous day market close
-        time.subtract(1, 'days');
+        // Set the time to be this Friday at market close
+        time.day(5)
         time.minute(0)
         time.hour(20)
+    } else { // If it's a weekday
+        // If the current hour is after the market is closed (this is in UTC time) but still same day
+        if (currentHour >= 20) {
+            // Set the time to be the market close
+            time.minute(0)
+            time.hour(20)
+        } else if (currentHour < 13 || (currentHour === 13 && currentMinute < 35)){
+            // If market is before hours 
+
+            // if it's monday, set day to be previous Fri
+            if (time.day() === 1) {
+                time.day(-2)
+            } else { // Set day to yesterday
+                time.subtract(1, 'days');
+            }
+
+            // Set the time to be market close
+            time.minute(0)
+            time.hour(20)
+        }
     }
+
     // Else market is open 
     
     // convert back to EST
     time.subtract(4, 'hours')
+
+    console.log(time.format("YYYY-MM-DD HH:mm:00"))
 
     return time.format("YYYY-MM-DD HH:mm:00")
 

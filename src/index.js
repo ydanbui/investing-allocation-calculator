@@ -86,7 +86,7 @@ do {
     // If we don't have money left to spend, stop
 } while (maxAmountToInvest > 0)
 
-console.log(`Buy ${newSharesIVV} IVV shares at $${priceIVV} ($${newSharesIVV * priceIVV} total)`)
-console.log(`Buy ${newSharesIXUS} IXUS shares at $${priceIXUS} ($${newSharesIXUS * priceIXUS} total)`)
-console.log(`Total of $${(newSharesIVV * priceIVV) + newSharesIXUS * priceIXUS} out of $${origMaxAmountToInvest} max amount`)
-console.log(`Updated percentages: ${(percentIVV * 100).toFixed(1)}% IVV : ${(percentIXUS * 100).toFixed(1)}% IXUS`)
+// console.log(`Buy ${newSharesIVV} IVV shares at $${priceIVV} ($${newSharesIVV * priceIVV} total)`)
+// console.log(`Buy ${newSharesIXUS} IXUS shares at $${priceIXUS} ($${newSharesIXUS * priceIXUS} total)`)
+// console.log(`Total of $${(newSharesIVV * priceIVV) + newSharesIXUS * priceIXUS} out of $${origMaxAmountToInvest} max amount`)
+// console.log(`Updated percentages: ${(percentIVV * 100).toFixed(1)}% IVV : ${(percentIXUS * 100).toFixed(1)}% IXUS`)
