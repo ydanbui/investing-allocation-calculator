@@ -3,10 +3,10 @@ import moment from 'moment'
 // Get the latest stock price from the Alpha Vantage API
 const getLatestPrice = async (symbol) => {
     // Real call below
-    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=AQPJW15UPBPWYDJ4`)
+    // const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=AQPJW15UPBPWYDJ4`)
 
     // DEMO API CALL
-    // const response = await fetch('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo')
+    const response = await fetch('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo')
     
     if (!response.ok) {
         throw Error('Unable to fetch price')
