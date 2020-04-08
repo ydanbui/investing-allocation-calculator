@@ -10,7 +10,6 @@ getLatestPrice('IVV').then(price => {
 
 // BRAINSTORMING CODE
 
-// Amount of money the user wants to invest
 // Collected from user input
 
 // Stocks to invest in and desired allocation, collected from user
@@ -25,6 +24,8 @@ const stocks = [{
     allocation: .3,
     currentAmount: 2900
 }]
+
+// Amount of money the user wants to invest
 
 const origMaxAmountToInvest = 1500
 let maxAmountToInvest = 1500
