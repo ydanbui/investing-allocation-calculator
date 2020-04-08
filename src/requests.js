@@ -25,8 +25,6 @@ const getLastTime = () => {
     // Testing different times
     // const time = moment("2020-04-13 06:36", "YYYY-MM-DD HH:mm").utc() // local PST time 24 hrs
 
-    // console.log(typeof time.day())
-
     // Get the current hour in UTC
     const currentHour = time.hour()
 
@@ -40,46 +38,53 @@ const getLastTime = () => {
     if (time.day() === 0) {
         // Set the time to be last Friday at market close
         time.day(-2)
-        time.minute(0)
-        time.hour(20)
-    } else if (time.day() === 6) {
-        // If it's currently Saturday
+        setTimeMarketClose(time)
 
+    // If it's currently Saturday
+    } else if (time.day() === 6) {
         // Set the time to be this Friday at market close
         time.day(5)
-        time.minute(0)
-        time.hour(20)
-    } else { // If it's a weekday
+        setTimeMarketClose(time)
+
+    // If it's a weekday
+    } else {
         // If the current hour is after the market is closed (this is in UTC time) but still same day
         if (currentHour >= 20) {
             // Set the time to be the market close
-            time.minute(0)
-            time.hour(20)
+            setTimeMarketClose(time)
+        
+        // If market is before hours 
         } else if (currentHour < 13 || (currentHour === 13 && currentMinute < 35)){
-            // If market is before hours 
-
             // if it's monday, set day to be previous Fri
             if (time.day() === 1) {
                 time.day(-2)
-            } else { // Set day to yesterday
+
+            // If it's other weekday set day to yesterday
+            } else {
                 time.subtract(1, 'days');
             }
 
             // Set the time to be market close
-            time.minute(0)
-            time.hour(20)
+            setTimeMarketClose(time)
         }
     }
 
-    // Else market is open 
-    
+    // If none of conditions above met, market is open 
+
     // convert back to EST
     time.subtract(4, 'hours')
 
     console.log(time.format("YYYY-MM-DD HH:mm:00"))
 
+    // Return the proper time format to extract data from API JSON
     return time.format("YYYY-MM-DD HH:mm:00")
 
+}
+
+// Set the time of the moment object to be 4pm EST (market close)
+const setTimeMarketClose = moment => {
+    moment.minute(0)
+    moment.hour(20) // hours in UTC
 }
 
 export {getLatestPrice as default}
