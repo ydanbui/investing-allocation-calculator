@@ -8,86 +8,65 @@ getLatestPrice('IVV').then(price => {
     console.log(`Error: ${err}`)
 })
 
-// BRAINSTORMING CODE
-
-// Collected from user input
-
-// Stocks to invest in and desired allocation, collected from user
 const stocks = [{
     symbol: 'IVV',
     price: 265,
     allocation: .7,
-    currentAmount: 7100
+    currentAmount: 7100,
+    newAmount: 7100,
+    percent: null,
+    newShares: 0
 }, {
     symbol: 'IXUS',
     price: 47,
     allocation: .3,
-    currentAmount: 2900
+    currentAmount: 2900,
+    newAmount: 2900,
+    percent: null,
+    newShares: 0
 }]
 
-// Amount of money the user wants to invest
-
-const origMaxAmountToInvest = 1500
 let maxAmountToInvest = 1500
 
-// ============== CALCULATIONS ====================
-const priceIVV = stocks[0].price
-const priceIXUS = stocks[1].price
+// Store the total value of all stocks in portfolio
+let totalCombined = stocks.reduce((total, stock) => {
+    return total + stock.currentAmount
+}, 0)
 
-const allocationIVV = stocks[0].allocation
-const allocationIXUS = stocks[1].allocation
+// Calculate the stock percentages
+stocks.forEach(stock => {
+    stock.percent = stock.newAmount / totalCombined
+})
 
-let totalIVV = stocks[0].currentAmount
-let totalIXUS = stocks[1].currentAmount
-let totalAll = totalIVV + totalIXUS
+// Generate while loop for each stock
+const whileLoopFunction = stocks.map((stock) => {
+    const runWhileLoop = () => {
+        while (stock.percent <= stock.allocation && maxAmountToInvest > 0) {
+            maxAmountToInvest -= stock.price
 
-let percentIVV = totalIVV / totalAll
-let percentIXUS = totalIXUS / totalAll
+            if (maxAmountToInvest < 0) {
+                break
+            }
 
-let newSharesIVV = 0
-let newSharesIXUS = 0
+            stock.newShares++
+            stock.newAmount += stock.price
+            totalCombined += stock.price
+            
+            stocks.forEach(stock => {
+                stock.percent = stock.newAmount / totalCombined
+            })
+        }
+    }
 
+    return runWhileLoop
+}) 
 
-// Nested while loops that will keep rebalancing the new shares to purchase as closely match our desired allocation as possible
-// Will stop when we run out of money to buy new shares
 do {
-    // While the allocation of IVV is less than desired and there is still money to invest
-    while (percentIVV <= allocationIVV && maxAmountToInvest > 0) {
-        maxAmountToInvest -= priceIVV
-
-        // Don't add a share if this goes over our investable amount
-        if (maxAmountToInvest < 0) {
-            break
-        }
-        // Add a share and recalculate the percentages
-        newSharesIVV++
-        totalIVV += priceIVV
-        totalAll += priceIVV
-        percentIVV = totalIVV / totalAll
-        percentIXUS = totalIXUS / totalAll
-    }
-
-    // While the allocation of IXUS is less than desired and there is still money to invest
-    while (percentIXUS <= allocationIXUS && maxAmountToInvest > 0) {
-        maxAmountToInvest -= priceIXUS
-
-        // Don't add a share if this goes over our investable amount
-        if (maxAmountToInvest < 0) {
-            break
-        }
-
-        // Add a share and recalculate the percentage
-        newSharesIXUS++
-        totalIXUS += priceIXUS
-        totalAll += priceIXUS
-        percentIXUS = totalIXUS / totalAll
-        percentIVV = totalIVV / totalAll
-    }
-
-    // If we don't have money left to spend, stop
+    whileLoopFunction.forEach((whileBlock) => {
+        whileBlock()
+    })
 } while (maxAmountToInvest > 0)
 
-// console.log(`Buy ${newSharesIVV} IVV shares at $${priceIVV} ($${newSharesIVV * priceIVV} total)`)
-// console.log(`Buy ${newSharesIXUS} IXUS shares at $${priceIXUS} ($${newSharesIXUS * priceIXUS} total)`)
-// console.log(`Total of $${(newSharesIVV * priceIVV) + newSharesIXUS * priceIXUS} out of $${origMaxAmountToInvest} max amount`)
-// console.log(`Updated percentages: ${(percentIVV * 100).toFixed(1)}% IVV : ${(percentIXUS * 100).toFixed(1)}% IXUS`)
+stocks.forEach((stock) => {
+    console.log(`Buy ${stock.newShares} ${stock.symbol} shares at $${stock.price} ($${stock.newShares * stock.price} total)`)
+})
