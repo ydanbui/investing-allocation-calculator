@@ -3,18 +3,21 @@ import moment from 'moment'
 // Get the latest stock price from the Alpha Vantage API
 const getLatestPrice = async (symbol) => {
     // Real call below
-    // const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=AQPJW15UPBPWYDJ4`)
+    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=AQPJW15UPBPWYDJ4`)
 
     // DEMO API CALL
-    const response = await fetch('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo')
+    // const response = await fetch('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo')
     
     if (!response.ok) {
         throw Error('Unable to fetch price')
     }
 
     const data = await response.json()
+    console.log(data)
 
-    return data["Time Series (5min)"][getLastTime()]['4. close']
+
+    return parseFloat(data["Time Series (5min)"][getLastTime()]['4. close'])
+
 }
 
 // Get the last stock price time to retrieve the price from the JSON response
@@ -74,7 +77,7 @@ const getLastTime = () => {
     // convert back to EST
     time.subtract(4, 'hours')
 
-    console.log(time.format("YYYY-MM-DD HH:mm:00"))
+    // console.log(time.format("YYYY-MM-DD HH:mm:00"))
 
     // Return the proper time format to extract data from API JSON
     return time.format("YYYY-MM-DD HH:mm:00")
