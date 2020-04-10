@@ -3,28 +3,23 @@ import "regenerator-runtime/runtime"
 import getLatestPrice from './requests'
 import Stock from './stock'
 
-// Pseudocode
-
+// Create array of stocks from user input
 const createStockArray = async () => {
-    // Create stocks array from user input
-    const arr = [new Stock('IVV', .7, 7100), new Stock('IXUS', .3, 2900)]
+    const arr = [new Stock('IVV', .5, 6000), new Stock('IXUS', .3, 2900), new Stock('IBM', .2, 1100)]
         
-    // // Retrieve current stock price
+    // // Fetch the current stock price for each stock
     for (let i = 0; i < arr.length; i++) {
         const stock = arr[i]
         stock.price = await getLatestPrice(stock.symbol)
     }
-    // arr.forEach(async stock => {
-    //     const stockPrice = await getLatestPrice(stock.symbol)
-    //     stock.price = stockPrice
-    // }) 
     
     return arr
 }
 
+// Create array of functions that generate while loop for each stock
 const createWhileLoopFunctions = (stocks) => {
     const functArr = stocks.map((stock) => {
-
+        
         // Create the function for the current stock
         const generateWhileLoop = (maxAmountToInvest, totalCombined) => {
             // While the allocation of the current stock is less than desired and there is still money to invest
@@ -50,14 +45,13 @@ const createWhileLoopFunctions = (stocks) => {
         }
         return generateWhileLoop
     }) 
-
     return functArr
 }
 
+// Main program that calculates investment to make based off investing amount entered
 const calculateInvestment = async (maxAmountToInvest) => {
     // Amount of money user wants to invest
     const origMaxAmountToInvest = maxAmountToInvest
-    
     
     const stocks = await createStockArray()
     console.log(stocks)
@@ -67,13 +61,13 @@ const calculateInvestment = async (maxAmountToInvest) => {
         return total + stock.amount
     }, 0)
 
+    // Calculate the starting percentage of each stock
     stocks.forEach(stock => {
         stock.percent = stock.amount / totalCombined
     })
 
+    // Create array of functions that generate the while loop for each stock
     const whileLoopFunctArr = createWhileLoopFunctions(stocks)
-
-    // debugger
 
     // // Nested while loops that will keep rebalancing the new shares to purchase as closely match our desired allocation as possible
     // // Will stop when we run out of money to buy new shares
@@ -81,6 +75,7 @@ const calculateInvestment = async (maxAmountToInvest) => {
         // Generate a while loop for each stock
         whileLoopFunctArr.forEach((generateWhileLoop) => {
             const [a, b] = generateWhileLoop(maxAmountToInvest, totalCombined)
+            // Update global variables after each itearation
             maxAmountToInvest = a
             totalCombined = b
         })
@@ -103,9 +98,9 @@ const calculateInvestment = async (maxAmountToInvest) => {
         console.log(`$${stock.amount.toFixed(2)} ${stock.symbol} (${(stock.percent * 100).toFixed(1)}%)`)
     })
 
-    console.log(`$${totalCombined.toFixed(1)} Total`)
+    console.log(`$${totalCombined.toFixed(2)} Total`)
 }
 
 // User submits input (Event listener block)
 
-calculateInvestment(1500)
+calculateInvestment(1000)

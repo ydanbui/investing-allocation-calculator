@@ -1,5 +1,3 @@
-import getLatestPrice from './requests'
-
 class Stock {
     constructor(symbol, allocation, amount) {
         this.symbol = symbol,
