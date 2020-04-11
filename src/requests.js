@@ -15,8 +15,8 @@ const getLatestPrice = async (symbol) => {
     const data = await response.json()
     console.log(data)
 
-
-    return parseFloat(data["Time Series (5min)"][getLastTime()]['4. close'])
+    // return parseFloat(data["Time Series (5min)"][getLastTime()]['4. close'])
+    return parseFloat(data["Time Series (5min)"]["2020-04-09 16:00:00"]['4. close'])
 
 }
 
@@ -77,7 +77,7 @@ const getLastTime = () => {
     // convert back to EST
     time.subtract(4, 'hours')
 
-    // console.log(time.format("YYYY-MM-DD HH:mm:00"))
+    console.log(time.format("YYYY-MM-DD HH:mm:00"))
 
     // Return the proper time format to extract data from API JSON
     return time.format("YYYY-MM-DD HH:mm:00")

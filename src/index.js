@@ -101,6 +101,23 @@ const calculateInvestment = async (maxAmountToInvest) => {
     console.log(`$${totalCombined.toFixed(2)} Total`)
 }
 
-// User submits input (Event listener block)
+// =============================
+const form = document.querySelector('#form')
 
-calculateInvestment(1000)
+// User submits input (Event listener block)
+form.addEventListener('submit', e => {
+    e.preventDefault()
+    console.log('form submitted')
+
+    const maxAmountToInvest = parseFloat(document.querySelector('#maxAmountToInvestDOM').value)
+
+    const stocksInput = document.querySelectorAll('.stock-input-group')
+    
+    stocksInput.forEach(stockInputGroup => {
+        const symbol = stockInputGroup.querySelector('.stock-symbol').value
+        const allocation = parseFloat(stockInputGroup.querySelector('.stock-allocation').value)
+        const amount = parseFloat(stockInputGroup.querySelector('.stock-amount').value)
+    })
+
+    calculateInvestment(1000)
+})

@@ -5,10 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Boilerplate App</title>
+    <title>Investing Allocation Calculator</title>
 </head>
 <body>
-    <h1>Boilerplate</h1>
+    <h1>Investing Allocation Calculator</h1>
+
+    <form id="form" action="">
+        <label for="">Max amount to invest</label>
+        <input id="maxAmountToInvestDOM" class="max-amount" type="number">
+        <div class="stock-input-group">
+            <label for="">Stock symbol</label>
+            <input class="stock-symbol" type="text">
+            <label for="">Desired Allocation</label>
+            <input class="stock-allocation" type="number">
+            <label for="">Current Amount</label>
+            <input class="stock-amount" type="number">
+        </div>
+        <div class="stock-input-group">
+            <label for="">Stock symbol</label>
+            <input class="stock-symbol" type="text">
+            <label for="">Desired Allocation</label>
+            <input class="stock-allocation" type="number">
+            <label for="">Current Amount</label>
+            <input class="stock-amount" type="number">
+        </div>
+        <button type="submit">Submit</button>
+    </form>
     <script src="./scripts/index-bundle.js"></script>
 </body>
 </html>
