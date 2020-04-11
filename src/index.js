@@ -4,16 +4,16 @@ import getLatestPrice from './requests'
 import Stock from './stock'
 
 // Create array of stocks from user input
-const createStockArray = async () => {
-    const arr = [new Stock('IVV', .5, 6000), new Stock('IXUS', .3, 2900), new Stock('IBM', .2, 1100)]
-        
+// Function arguments multiple arrays containing stock information about each stock
+const createStockArray = async (stockInputArr) => {
+    // const stockInputArr = [new Stock('IVV', .5, 6000), new Stock('IXUS', .3, 2900), new Stock('IBM', .2, 1100)]
     // // Fetch the current stock price for each stock
-    for (let i = 0; i < arr.length; i++) {
-        const stock = arr[i]
+    for (let i = 0; i < stockInputArr.length; i++) {
+        const stock = stockInputArr[i]
         stock.price = await getLatestPrice(stock.symbol)
     }
     
-    return arr
+    return stockInputArr
 }
 
 // Create array of functions that generate while loop for each stock
@@ -101,8 +101,8 @@ const calculateInvestment = (maxAmountToInvest, stocks) => {
     console.log(`$${totalCombined.toFixed(2)} Total`)
 }
 
-const runProgram = async (maxAmountToInvest) => {
-    const stocks = await createStockArray()
+const runProgram = async (maxAmountToInvest, stockInputValues) => {
+    const stocks = await createStockArray(stockInputValues)
     calculateInvestment(maxAmountToInvest, stocks)
 }
 
@@ -117,13 +117,19 @@ form.addEventListener('submit', e => {
     const maxAmountToInvest = parseFloat(document.querySelector('#maxAmountToInvestDOM').value)
 
     const stocksInputGroups = document.querySelectorAll('.stock-input-group')
-    
+
+    const stockInputArr = []
+
+    // const arr = [new Stock('IVV', .5, 6000), new Stock('IXUS', .3, 2900), new Stock('IBM', .2, 1100)]
+
     stocksInputGroups.forEach(stockInputGroup => {
         const symbol = stockInputGroup.querySelector('.stock-symbol').value
         const allocation = parseFloat(stockInputGroup.querySelector('.stock-allocation').value)
         const amount = parseFloat(stockInputGroup.querySelector('.stock-amount').value)
+
+        stockInputArr.push(new Stock(symbol, allocation, amount))
     })
 
-    runProgram(maxAmountToInvest)
+    runProgram(maxAmountToInvest, stockInputArr)
     // calculateInvestment(1000)
 })
