@@ -49,12 +49,12 @@ const createWhileLoopFunctions = (stocks) => {
 }
 
 // Main program that calculates investment to make based off investing amount entered
-const calculateInvestment = async (maxAmountToInvest) => {
+const calculateInvestment = (maxAmountToInvest, stocks) => {
     // Amount of money user wants to invest
     const origMaxAmountToInvest = maxAmountToInvest
     
-    const stocks = await createStockArray()
-    console.log(stocks)
+    // const stocks = await createStockArray()
+    // console.log(stocks)
 
     // Calculate Total value of all stocks in portfolio
     let totalCombined = stocks.reduce((total, stock) => {
@@ -101,6 +101,11 @@ const calculateInvestment = async (maxAmountToInvest) => {
     console.log(`$${totalCombined.toFixed(2)} Total`)
 }
 
+const runProgram = async (maxAmountToInvest) => {
+    const stocks = await createStockArray()
+    calculateInvestment(maxAmountToInvest, stocks)
+}
+
 // =============================
 const form = document.querySelector('#form')
 
@@ -111,13 +116,14 @@ form.addEventListener('submit', e => {
 
     const maxAmountToInvest = parseFloat(document.querySelector('#maxAmountToInvestDOM').value)
 
-    const stocksInput = document.querySelectorAll('.stock-input-group')
+    const stocksInputGroups = document.querySelectorAll('.stock-input-group')
     
-    stocksInput.forEach(stockInputGroup => {
+    stocksInputGroups.forEach(stockInputGroup => {
         const symbol = stockInputGroup.querySelector('.stock-symbol').value
         const allocation = parseFloat(stockInputGroup.querySelector('.stock-allocation').value)
         const amount = parseFloat(stockInputGroup.querySelector('.stock-amount').value)
     })
 
-    calculateInvestment(1000)
+    runProgram(maxAmountToInvest)
+    // calculateInvestment(1000)
 })
