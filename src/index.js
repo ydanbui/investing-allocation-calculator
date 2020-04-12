@@ -1,6 +1,6 @@
 import "core-js/stable"
 import "regenerator-runtime/runtime"
-import Stock, {fetchStockPrices} from './stock'
+import {fetchStockPrices, createStocksArray} from './stock'
 import calculateInvestment, { printSummary } from './calculator'
 
 const runProgram = async (maxAmountToInvest, stockInputValues) => {
@@ -19,15 +19,9 @@ form.addEventListener('submit', e => {
 
     const maxAmountToInvest = parseFloat(document.querySelector('#maxAmountToInvestDOM').value)
     const stocksInputGroups = document.querySelectorAll('.stock-input-group')
-    const stockInputArr = []
 
-    stocksInputGroups.forEach(stockInputGroup => {
-        const symbol = stockInputGroup.querySelector('.stock-symbol').value
-        const allocation = parseFloat(stockInputGroup.querySelector('.stock-allocation').value)
-        const amount = parseFloat(stockInputGroup.querySelector('.stock-amount').value)
-
-        stockInputArr.push(new Stock(symbol, allocation, amount))
-    })
+    // Store user input in stocks array
+    const stockInputArr = createStocksArray(stocksInputGroups)
 
     runProgram(maxAmountToInvest, stockInputArr)
 })

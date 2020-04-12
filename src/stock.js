@@ -14,7 +14,7 @@ class Stock {
 // Retrieve the price of each stock the user entered
 const fetchStockPrices = async (stockInputArr) => {
     // Function is an array of Stocks without the price yet
-
+    debugger
     // // Fetch the current stock price for each stock
     for (let i = 0; i < stockInputArr.length; i++) {
         const stock = stockInputArr[i]
@@ -25,4 +25,18 @@ const fetchStockPrices = async (stockInputArr) => {
     return stockInputArr
 }
 
-export { Stock as default, fetchStockPrices }
+// Initialize the stocks array with stocks from user input
+const createStocksArray = (stocksInputGroups) => {
+    const stockInputArr = []
+
+    stocksInputGroups.forEach(stockInputGroup => {
+        const symbol = stockInputGroup.querySelector('.stock-symbol').value
+        const allocation = parseFloat(stockInputGroup.querySelector('.stock-allocation').value)
+        const amount = parseFloat(stockInputGroup.querySelector('.stock-amount').value)
+
+        stockInputArr.push(new Stock(symbol, allocation, amount))
+    })
+    return stockInputArr
+}
+
+export { Stock as default, fetchStockPrices, createStocksArray }
