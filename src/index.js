@@ -16,14 +16,10 @@ const form = document.querySelector('#form')
 // User submits input (Event listener block)
 form.addEventListener('submit', e => {
     e.preventDefault()
-    console.log('form submitted')
 
     const maxAmountToInvest = parseFloat(document.querySelector('#maxAmountToInvestDOM').value)
-
     const stocksInputGroups = document.querySelectorAll('.stock-input-group')
-
     const stockInputArr = []
-
 
     stocksInputGroups.forEach(stockInputGroup => {
         const symbol = stockInputGroup.querySelector('.stock-symbol').value
@@ -34,4 +30,17 @@ form.addEventListener('submit', e => {
     })
 
     runProgram(maxAmountToInvest, stockInputArr)
+})
+
+// Add another stock
+const addStockBtn = document.querySelector('#addStockBtn')
+const stockInputContainer = document.querySelector('#stockInputContainer')
+
+addStockBtn.addEventListener('click', e => {
+    e.preventDefault()
+    
+    const stockInputGroupEl = document.createElement('div')
+    stockInputGroupEl.classList.add('stock-input-group')
+    stockInputGroupEl.innerHTML = ' <label for="">Stock symbol</label><input class="stock-symbol" type="text"><label for="">Desired Allocation</label><input class="stock-allocation" type="text"><label for="">Current Amount</label><input class="stock-amount" type="number">'
+    stockInputContainer.appendChild(stockInputGroupEl)
 })

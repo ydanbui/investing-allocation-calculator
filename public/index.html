@@ -13,30 +13,25 @@
     <form id="form" action="">
         <label for="">Max amount to invest</label>
         <input id="maxAmountToInvestDOM" class="max-amount" type="number">
-        <div class="stock-input-group">
-            <label for="">Stock symbol</label>
-            <input class="stock-symbol" type="text">
-            <label for="">Desired Allocation</label>
-            <input class="stock-allocation" type="text">
-            <label for="">Current Amount</label>
-            <input class="stock-amount" type="number">
+        <div id="stockInputContainer">
+            <div class="stock-input-group">
+                <label for="">Stock symbol</label>
+                <input class="stock-symbol" type="text">
+                <label for="">Desired Allocation</label>
+                <input class="stock-allocation" type="text">
+                <label for="">Current Amount</label>
+                <input class="stock-amount" type="number">
+            </div>
+            <div class="stock-input-group">
+                <label for="">Stock symbol</label>
+                <input class="stock-symbol" type="text">
+                <label for="">Desired Allocation</label>
+                <input class="stock-allocation" type="text">
+                <label for="">Current Amount</label>
+                <input class="stock-amount" type="number">
+            </div>
         </div>
-        <div class="stock-input-group">
-            <label for="">Stock symbol</label>
-            <input class="stock-symbol" type="text">
-            <label for="">Desired Allocation</label>
-            <input class="stock-allocation" type="text">
-            <label for="">Current Amount</label>
-            <input class="stock-amount" type="number">
-        </div>
-        <div class="stock-input-group">
-            <label for="">Stock symbol</label>
-            <input class="stock-symbol" type="text">
-            <label for="">Desired Allocation</label>
-            <input class="stock-allocation" type="text">
-            <label for="">Current Amount</label>
-            <input class="stock-amount" type="number">
-        </div>
+        <button id="addStockBtn">Add Stock</button>
         <button type="submit">Submit</button>
     </form>
     <script src="./scripts/index-bundle.js"></script>
