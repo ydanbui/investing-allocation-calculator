@@ -1,29 +1,54 @@
 // Create array of functions that generate while loop for each stock
 const createWhileLoopFunctions = (stocks) => {
     const functArr = stocks.map((stock) => {
+        if (!stock.mutualFund) {
+            // Create the function for the current stock if it is a share stock
+            const generateWhileLoop = (maxAmountToInvest, totalCombined) => {
+                // While the allocation of the current stock is less than desired and there is still money to invest
+                while (stock.percent <= stock.allocation && maxAmountToInvest > 0) {
+                    maxAmountToInvest -= stock.price
         
-        // Create the function for the current stock
-        const generateWhileLoop = (maxAmountToInvest, totalCombined) => {
-            // While the allocation of the current stock is less than desired and there is still money to invest
-            while (stock.percent <= stock.allocation && maxAmountToInvest > 0) {
-                maxAmountToInvest -= stock.price
-    
-                // Don't add a share if this goes over our investable amount
-                if (maxAmountToInvest < 0) {
-                    break
+                    // Don't add a share if this goes over our investable amount
+                    if (maxAmountToInvest < 0) {
+                        break
+                    }
+        
+                    // Add a share
+                    stock.newShares++
+                    stock.amount += stock.price
+                    totalCombined += stock.price
+                    
+                    // recalculate the percentages of each stock
+                    stocks.forEach(stock => {
+                        stock.percent = stock.amount / totalCombined
+                    })
                 }
-    
-                // Add a share
-                stock.newShares++
-                stock.amount += stock.price
-                totalCombined += stock.price
-                
-                // recalculate the percentages of each stock
-                stocks.forEach(stock => {
-                    stock.percent = stock.amount / totalCombined
-                })
+                return [maxAmountToInvest, totalCombined]
             }
-            return [maxAmountToInvest, totalCombined]
+        } else {
+            // Create the function for the current stock if it is a mutual fund
+            const generateWhileLoop = (maxAmountToInvest, totalCombined) => {
+                // If the allocation of the current fund is less than desired and there is still money to invest
+                if (stock.percent <= stock.allocation && maxAmountToInvest > 0) {
+                    // Calculate amount of fund needed to buy to reach desired allocation
+                    const amountNeeded = (totalCombined + maxAmountToInvest) * stock.allocation - stock.amount
+                    
+                    // If we have enough money to buy the amount needed
+                    if (amountNeeded <= maxAmountToInvest) {
+                        stock.amount += amountNeeded
+                        maxAmountToInvest -= amountNeeded
+                        totalCombined += amountNeeded
+                    } else {
+                        // If we don't have enough money to buy the amount needed
+                        
+                        // Buy the most we can with what we have left
+                        stock.amount += maxAmountToInvest
+                        maxAmountToInvest = 0
+                        totalCombined += maxAmountToInvest
+                    }
+                }
+                return [maxAmountToInvest, totalCombined]
+            }
         }
         return generateWhileLoop
     }) 
