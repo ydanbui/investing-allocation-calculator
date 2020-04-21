@@ -1,14 +1,14 @@
 import getLatestPrice from './requests'
 
 class Stock {
-    constructor(symbol, allocation, amount) {
+    constructor(symbol, allocation, amount, mutualFund) {
         this.symbol = symbol,
         this.price = null,
         this.allocation = allocation,
         this.amount = amount,
         this.percent = null,
         this.newShares = 0,
-        this.mutualFund = true
+        this.mutualFund = mutualFund
     }
 }
 
@@ -34,8 +34,9 @@ const createStocksArray = (stocksInputGroups) => {
         const symbol = stockInputGroup.querySelector('.stock-symbol').value
         const allocation = parseFloat(stockInputGroup.querySelector('.stock-allocation').value)
         const amount = parseFloat(stockInputGroup.querySelector('.stock-amount').value)
+        const mutualFund = stockInputGroup.querySelector('.stock-checkbox').checked
 
-        stockInputArr.push(new Stock(symbol, allocation, amount))
+        stockInputArr.push(new Stock(symbol, allocation, amount, mutualFund))
     })
     return stockInputArr
 }

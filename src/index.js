@@ -37,6 +37,6 @@ addStockBtn.addEventListener('click', e => {
     const stocksInputGroups = document.querySelectorAll('.stock-input-group')
     const stockInputGroupEl = document.createElement('div')
     stockInputGroupEl.classList.add('stock-input-group')
-    stockInputGroupEl.innerHTML = `<div>${stocksInputGroups.length + 1}.</div><input class="stock-symbol" type="text"><div><label><input type="checkbox">Yes</label></div><input class="stock-allocation" type="text"><input class="stock-amount" type="number" step=".01">`
+    stockInputGroupEl.innerHTML = `<div>${stocksInputGroups.length + 1}.</div><input class="stock-symbol" type="text"><div><label><input class="stock-checkbox" type="checkbox">Yes</label></div><input class="stock-allocation" type="text"><input class="stock-amount" type="number" step=".01">`
     stockInputContainer.appendChild(stockInputGroupEl)
 })
