@@ -7,32 +7,54 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Investing Allocation Calculator</title>
 </head>
+<style>
+    .stock-input-group {
+        display: flex;
+    }
+    .row, .stock-input-group {
+        display: grid;
+        grid-template-columns: repeat(5, 150px);
+    }
+    .stock-symbol {
+        text-transform: uppercase;
+    }
+</style>
 <body>
     <h1>Investing Allocation Calculator</h1>
+    <p>Use this Investment allocation calculator to...</p>
 
     <form id="form" action="">
         <label for="">Max amount to invest</label>
-        <input id="maxAmountToInvestDOM" class="max-amount" type="number">
+        <input id="maxAmountToInvestDOM" class="max-amount" type="number" step=".01">
+        <div class="row">
+            <label for="">Stock</label>
+            <label for="">Symbol</label>
+            <label for="">Mutual Fund?</label>
+            <label for="">Allocation</label>
+            <label for="">Current Amount</label>
+        </div>
         <div id="stockInputContainer">
             <div class="stock-input-group">
-                <label for="">Stock symbol</label>
+                <div>1.</div>
                 <input class="stock-symbol" type="text">
-                <label for="">Desired Allocation</label>
+                <div>
+                    <label><input type="checkbox">Yes</label>
+                </div>
                 <input class="stock-allocation" type="text">
-                <label for="">Current Amount</label>
-                <input class="stock-amount" type="number">
+                <input class="stock-amount" type="number" step=".01">
             </div>
             <div class="stock-input-group">
-                <label for="">Stock symbol</label>
+                <div>2.</div>
                 <input class="stock-symbol" type="text">
-                <label for="">Desired Allocation</label>
+                <div>
+                    <label><input type="checkbox">Yes</label>
+                </div>
                 <input class="stock-allocation" type="text">
-                <label for="">Current Amount</label>
-                <input class="stock-amount" type="number">
+                <input class="stock-amount" type="number" step=".01">
             </div>
         </div>
+        <button type="submit">Calculate</button>
         <button id="addStockBtn">Add Stock</button>
-        <button type="submit">Submit</button>
     </form>
     <script src="./scripts/index-bundle.js"></script>
 </body>
