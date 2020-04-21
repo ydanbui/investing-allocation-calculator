@@ -15,8 +15,8 @@ const getLatestPrice = async (symbol) => {
     const data = await response.json()
     console.log(data)
 
-    // return parseFloat(data["Time Series (5min)"][getLastTime()]['4. close'])
-    return parseFloat(data["Time Series (5min)"]["2020-04-09 16:00:00"]['4. close'])
+    return parseFloat(data["Time Series (5min)"][getLastTime()]['4. close'])
+    // return parseFloat(data["Time Series (5min)"]["2020-04-17 16:00:00"]['4. close'])
 
 }
 
