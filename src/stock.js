@@ -7,7 +7,8 @@ class Stock {
         this.allocation = allocation,
         this.amount = amount,
         this.percent = null,
-        this.newShares = 0
+        this.newShares = 0,
+        this.mutualFund = true
     }
 }
 

@@ -1,9 +1,11 @@
 // Create array of functions that generate while loop for each stock
 const createWhileLoopFunctions = (stocks) => {
     const functArr = stocks.map((stock) => {
+        let generateWhileLoop
+
         if (!stock.mutualFund) {
             // Create the function for the current stock if it is a share stock
-            const generateWhileLoop = (maxAmountToInvest, totalCombined) => {
+            generateWhileLoop = (maxAmountToInvest, totalCombined) => {
                 // While the allocation of the current stock is less than desired and there is still money to invest
                 while (stock.percent <= stock.allocation && maxAmountToInvest > 0) {
                     maxAmountToInvest -= stock.price
@@ -27,7 +29,7 @@ const createWhileLoopFunctions = (stocks) => {
             }
         } else {
             // Create the function for the current stock if it is a mutual fund
-            const generateWhileLoop = (maxAmountToInvest, totalCombined) => {
+            generateWhileLoop = (maxAmountToInvest, totalCombined) => {
                 // If the allocation of the current fund is less than desired and there is still money to invest
                 if (stock.percent <= stock.allocation && maxAmountToInvest > 0) {
                     // Calculate amount of fund needed to buy to reach desired allocation
@@ -36,16 +38,23 @@ const createWhileLoopFunctions = (stocks) => {
                     // If we have enough money to buy the amount needed
                     if (amountNeeded <= maxAmountToInvest) {
                         stock.amount += amountNeeded
-                        maxAmountToInvest -= amountNeeded
+                        stock.newShares += amountNeeded
                         totalCombined += amountNeeded
+                        maxAmountToInvest -= amountNeeded
                     } else {
                         // If we don't have enough money to buy the amount needed
                         
                         // Buy the most we can with what we have left
                         stock.amount += maxAmountToInvest
-                        maxAmountToInvest = 0
+                        stock.newShares += maxAmountToInvest
                         totalCombined += maxAmountToInvest
+                        maxAmountToInvest = 0
                     }
+
+                    // recalculate the percentages of each stock
+                    stocks.forEach(stock => {
+                        stock.percent = stock.amount / totalCombined
+                    })
                 }
                 return [maxAmountToInvest, totalCombined]
             }
@@ -72,6 +81,7 @@ const calculateInvestment = (maxAmountToInvest, stocks) => {
 
     // // Nested while loops that will keep rebalancing the new shares to purchase as closely match our desired allocation as possible
     // // Will stop when we run out of money to buy new shares
+    debugger
     do {
         // Generate a while loop for each stock
         whileLoopFunctArr.forEach((generateWhileLoop) => {
@@ -89,11 +99,19 @@ const calculateInvestment = (maxAmountToInvest, stocks) => {
 const printSummary = (maxAmountToInvest, stocks, totalCombined) => {
     // =================== SUMMARY ===================
     stocks.forEach((stock) => {
-        console.log(`Buy ${stock.newShares} ${stock.symbol} shares at $${stock.price} per share ($${stock.newShares * stock.price} total)`)
+        if (stock.mutualFund) {
+            console.log(`Buy $${stock.newShares} of ${stock.symbol} (Current Price: $${stock.price})`)
+        } else {
+            console.log(`Buy ${stock.newShares} ${stock.symbol} shares at $${stock.price} per share ($${stock.newShares * stock.price} total)`)
+        }
     })
 
     const totalSpent = stocks.reduce((total, stock) => {
-        return total + (stock.newShares * stock.price)
+        if (stock.mutualFund) {
+            return total + (stock.newShares)
+        } else {
+            return total + (stock.newShares * stock.price)
+        }
     }, 0)
 
     console.log(`Total of $${totalSpent} spent out of $${maxAmountToInvest} max amount`)
