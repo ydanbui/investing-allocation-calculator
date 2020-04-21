@@ -2,10 +2,16 @@ import moment from 'moment'
 
 // Get the latest stock price from the Alpha Vantage API
 const getLatestPrice = async (symbol) => {
-    // Real call below
-    const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=AQPJW15UPBPWYDJ4`)
-
-    // DEMO API CALL
+    // IEX PRoduction
+    const response = await fetch(`https://cloud.iexapis.com/stable/stock/${symbol}/quote?token=pk_d5b2dda8ef5044f8b9b5f778fab53e24`)
+    
+    // IEX Sandbox
+    // const response = await fetch(`https://sandbox.iexapis.com/stable/stock/${symbol}/quote?token=Tpk_dbba3d0711794d788c87602cb0d21f80`)
+    
+    // Alphavantage production
+    // const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=AQPJW15UPBPWYDJ4`)
+    
+    // Alphavantage Demo
     // const response = await fetch('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo')
     
     if (!response.ok) {
@@ -13,9 +19,14 @@ const getLatestPrice = async (symbol) => {
     }
 
     const data = await response.json()
-    console.log(data)
+    console.log(data.latestPrice)
+    console.log(typeof data.latestPrice)
 
-    return parseFloat(data["Time Series (5min)"][getLastTime()]['4. close'])
+
+    return data.latestPrice
+
+    // Alphaadvantage 
+    // return parseFloat(data["Time Series (5min)"][getLastTime()]['4. close'])
     // return parseFloat(data["Time Series (5min)"]["2020-04-17 16:00:00"]['4. close'])
 
 }

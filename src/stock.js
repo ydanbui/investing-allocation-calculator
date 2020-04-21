@@ -14,7 +14,7 @@ class Stock {
 // Retrieve the price of each stock the user entered
 const fetchStockPrices = async (stockInputArr) => {
     // Function is an array of Stocks without the price yet
-    debugger
+    // debugger
     // // Fetch the current stock price for each stock
     for (let i = 0; i < stockInputArr.length; i++) {
         const stock = stockInputArr[i]
