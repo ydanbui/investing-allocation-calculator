@@ -1,0 +1,54 @@
+.stock-input-group {
+    display: flex;
+}
+
+.row, .stock-input-group {
+    display: grid;
+    grid-template-columns: repeat(5, 150px);
+    // Create implicit column for remove button
+    grid-auto-flow: column;
+    grid-auto-columns: 24px;
+}
+
+.stock-symbol {
+    text-transform: uppercase;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    &__money {
+        width: 150px;
+
+        &::before {
+            content: '$';
+            position: absolute;
+            bottom: 0px;
+            left: 8px;
+        }
+    }
+
+    &__allocation {
+        width: 64px;
+
+        &::after {
+            content: '%';
+            position: absolute;
+            bottom: 0px;
+            right: 8px;
+        }
+    }
+}
+
+.input {
+    &__money {
+        padding-left: 20px;
+    }
+
+    &__allocation {
+        padding-right: 24px;
+        text-align: right;
+    }
+}

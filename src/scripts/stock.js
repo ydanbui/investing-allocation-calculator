@@ -15,7 +15,6 @@ class Stock {
 // Retrieve the price of each stock the user entered
 const fetchStockPrices = async (stockInputArr) => {
     // Function is an array of Stocks without the price yet
-    // debugger
     // // Fetch the current stock price for each stock
     for (let i = 0; i < stockInputArr.length; i++) {
         const stock = stockInputArr[i]
@@ -32,7 +31,7 @@ const createStocksArray = (stocksInputGroups) => {
 
     stocksInputGroups.forEach(stockInputGroup => {
         const symbol = stockInputGroup.querySelector('.stock-symbol').value
-        const allocation = parseFloat(stockInputGroup.querySelector('.stock-allocation').value)
+        const allocation = parseFloat(stockInputGroup.querySelector('.stock-allocation').value) / 100
         const amount = parseFloat(stockInputGroup.querySelector('.stock-amount').value)
         const mutualFund = stockInputGroup.querySelector('.stock-checkbox').checked
 

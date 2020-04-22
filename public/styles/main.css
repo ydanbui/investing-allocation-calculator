@@ -9,13 +9,15 @@
   display: grid;
   -ms-grid-columns: (150px)[5];
       grid-template-columns: repeat(5, 150px);
+  grid-auto-flow: column;
+  grid-auto-columns: 24px;
 }
 
 .stock-symbol {
   text-transform: uppercase;
 }
 
-.max-amount-container {
+.input-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -23,18 +25,37 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 200px;
   position: relative;
 }
 
-.max-amount {
-  padding-left: 20px;
+.input-container__money {
+  width: 150px;
 }
 
-.max-amount-container::before {
+.input-container__money::before {
   content: '$';
   position: absolute;
   bottom: 0px;
   left: 8px;
+}
+
+.input-container__allocation {
+  width: 64px;
+}
+
+.input-container__allocation::after {
+  content: '%';
+  position: absolute;
+  bottom: 0px;
+  right: 8px;
+}
+
+.input__money {
+  padding-left: 20px;
+}
+
+.input__allocation {
+  padding-right: 24px;
+  text-align: right;
 }
 /*# sourceMappingURL=main.css.map */

@@ -13,9 +13,9 @@
     <p>Use this Investment allocation calculator to...</p>
 
     <form id="form" action="">
-        <div class="max-amount-container"> 
+        <div class="input-container input-container__money"> 
             <label for="">Max amount to invest</label>
-            <input id="maxAmountToInvestDOM" class="max-amount" type="number" step=".01">
+            <input id="maxAmountToInvestDOM" class="max-amount input input__money" type="number" step=".01">
         </div>
         <div class="row">
             <label for="">Stock</label>
@@ -27,21 +27,29 @@
         <div id="stockInputContainer">
             <div class="stock-input-group">
                 <div>1.</div>
-                <input class="stock-symbol" type="text">
+                <input class="stock-symbol" type="text" maxlength="5">
                 <div>
                     <label><input class="stock-checkbox" type="checkbox">Yes</label>
                 </div>
-                <input class="stock-allocation" type="text">
-                <input class="stock-amount" type="number" step=".01">
+                <div class="input-container input-container__allocation"> 
+                    <input class="stock-allocation input input__allocation" type="number" min="1" max="99">
+                </div>
+                <div class="input-container input-container__money"> 
+                    <input class="stock-amount input input__money" type="number" step=".01">
+                </div>
             </div>
             <div class="stock-input-group">
                 <div>2.</div>
-                <input class="stock-symbol" type="text">
+                <input class="stock-symbol" type="text" maxlength="5">
                 <div>
                     <label><input class="stock-checkbox" type="checkbox">Yes</label>
                 </div>
-                <input class="stock-allocation" type="text">
-                <input class="stock-amount" type="number" step=".01">
+                <div class="input-container input-container__allocation"> 
+                    <input class="stock-allocation input input__allocation" type="number" min="1" max="99">
+                </div>
+                <div class="input-container input-container__money"> 
+                    <input class="stock-amount input input__money" type="number" step=".01">
+                </div>
             </div>
         </div>
         <button type="submit">Calculate</button>

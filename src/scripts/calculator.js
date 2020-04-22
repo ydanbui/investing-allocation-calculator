@@ -81,7 +81,6 @@ const calculateInvestment = (maxAmountToInvest, stocks) => {
 
     // // Nested while loops that will keep rebalancing the new shares to purchase as closely match our desired allocation as possible
     // // Will stop when we run out of money to buy new shares
-    debugger
     do {
         // Generate a while loop for each stock
         whileLoopFunctArr.forEach((generateWhileLoop) => {
