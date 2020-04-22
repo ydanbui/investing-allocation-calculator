@@ -2,6 +2,7 @@ import "core-js/stable"
 import "regenerator-runtime/runtime"
 import {fetchStockPrices, createStocksArray} from './stock'
 import calculateInvestment, { printSummary } from './calculator'
+import AutoNumeric from 'autonumeric'
 
 const runProgram = async (maxAmountToInvest, stockInputValues) => {
     const stocks = await fetchStockPrices(stockInputValues)
@@ -9,15 +10,14 @@ const runProgram = async (maxAmountToInvest, stockInputValues) => {
     printSummary(maxAmountToInvest, stocks, totalCombined)
 }
 
-// const arr = [new Stock('IVV', .5, 6000), new Stock('IXUS', .3, 2900), new Stock('IBM', .2, 1100)]
-
 const form = document.querySelector('#form')
 
 // User submits input (Event listener block)
 form.addEventListener('submit', e => {
     e.preventDefault()
 
-    const maxAmountToInvest = parseFloat(document.querySelector('#maxAmountToInvestDOM').value)
+    const maxAmountToInvest = parseFloat(document.querySelector('#maxAmountToInvestDOM').value.replace(',', ''))
+    console.log(maxAmountToInvest)
     const stocksInputGroups = document.querySelectorAll('.stock-input-group')
 
     // Store user input in stocks array
@@ -58,3 +58,18 @@ addStockBtn.addEventListener('click', e => {
     stockInputGroupEl.appendChild(removeButton)
     stockInputContainer.appendChild(stockInputGroupEl)
 })
+
+// Autonumeric
+// const maxAmountToInvestEl = document.querySelector('#maxAmountToInvestDOM')
+// autoMaxAmount = new AutoNumeric(maxAmountToInvestEl)
+// new AutoNumeric('.input__money')
+const moneyInputEls = document.querySelectorAll('.input__money')
+moneyInputEls.forEach(input => {
+    new AutoNumeric(input, {
+        emptyInputBehavior: "zero",
+        minimumValue: "0"
+        // unformatOnSubmit: true
+        // outputFormat: "number"
+    })
+})
+
