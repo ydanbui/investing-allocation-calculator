@@ -13,10 +13,6 @@
   grid-auto-columns: 24px;
 }
 
-.stock-symbol {
-  text-transform: uppercase;
-}
-
 .input-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -48,6 +44,10 @@
   position: absolute;
   bottom: 0px;
   right: 8px;
+}
+
+.input__symbol {
+  text-transform: uppercase;
 }
 
 .input__money {

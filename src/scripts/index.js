@@ -59,6 +59,17 @@ addStockBtn.addEventListener('click', e => {
     stockInputContainer.appendChild(stockInputGroupEl)
 })
 
+// Allow only letter characters in simple input (and backspace, tab, enter)
+const symbolInputEls = document.querySelectorAll('.input__symbol')
+symbolInputEls.forEach(input => {
+    input.addEventListener('keydown', e => {
+        if (e.keyCode < 65 && e.keyCode !== 8 && e.keyCode !== 9 && e.keyCode !== 13 || e.keyCode > 90) {
+            console.log('fire')
+            e.preventDefault()
+        }
+    })
+})
+
 // Format money input fields using Autonumeric
 const moneyInputEls = document.querySelectorAll('.input__money')
 moneyInputEls.forEach(input => {

@@ -10,10 +10,6 @@
     grid-auto-columns: 24px;
 }
 
-.stock-symbol {
-    text-transform: uppercase;
-}
-
 .input-container {
     display: flex;
     flex-direction: column;
@@ -43,6 +39,10 @@
 }
 
 .input {
+    &__symbol {
+        text-transform: uppercase;
+    }
+
     &__money {
         padding-left: 20px;
     }
