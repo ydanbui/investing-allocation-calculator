@@ -59,10 +59,7 @@ addStockBtn.addEventListener('click', e => {
     stockInputContainer.appendChild(stockInputGroupEl)
 })
 
-// Autonumeric
-// const maxAmountToInvestEl = document.querySelector('#maxAmountToInvestDOM')
-// autoMaxAmount = new AutoNumeric(maxAmountToInvestEl)
-// new AutoNumeric('.input__money')
+// Format money input fields using Autonumeric
 const moneyInputEls = document.querySelectorAll('.input__money')
 moneyInputEls.forEach(input => {
     new AutoNumeric(input, {
@@ -70,6 +67,16 @@ moneyInputEls.forEach(input => {
         minimumValue: "0"
         // unformatOnSubmit: true
         // outputFormat: "number"
+    })
+})
+
+// Format allocation fields using Autonumeric
+const allocationInputEls = document.querySelectorAll('.input__allocation')
+allocationInputEls.forEach(input => {
+    new AutoNumeric(input, {
+        decimalPlaces: 0,
+        maximumValue: "99",
+        minimumValue: "1"
     })
 })
 
