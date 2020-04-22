@@ -1,0 +1,30 @@
+.stock-input-group {
+    display: flex;
+}
+
+.row, .stock-input-group {
+    display: grid;
+    grid-template-columns: repeat(5, 150px);
+}
+
+.stock-symbol {
+    text-transform: uppercase;
+}
+
+.max-amount-container {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    position: relative;
+}
+
+.max-amount {
+    padding-left: 20px;
+}
+
+.max-amount-container::before {
+    content: '$';
+    position: absolute;
+    bottom: 0px;
+    left: 8px;
+}

@@ -1,0 +1,40 @@
+.stock-input-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.row, .stock-input-group {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (150px)[5];
+      grid-template-columns: repeat(5, 150px);
+}
+
+.stock-symbol {
+  text-transform: uppercase;
+}
+
+.max-amount-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 200px;
+  position: relative;
+}
+
+.max-amount {
+  padding-left: 20px;
+}
+
+.max-amount-container::before {
+  content: '$';
+  position: absolute;
+  bottom: 0px;
+  left: 8px;
+}
+/*# sourceMappingURL=main.css.map */
