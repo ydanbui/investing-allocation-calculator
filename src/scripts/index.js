@@ -2,7 +2,12 @@ import "core-js/stable"
 import "regenerator-runtime/runtime"
 import {fetchStockPrices, createStocksArray} from './stock'
 import calculateInvestment, { printSummary } from './calculator'
+import { addStockInputGroup, formatAmountInput } from './form'
+
 import AutoNumeric from 'autonumeric'
+
+addStockInputGroup()
+addStockInputGroup()
 
 const runProgram = async (maxAmountToInvest, stockInputValues) => {
     const stocks = await fetchStockPrices(stockInputValues)
@@ -10,14 +15,14 @@ const runProgram = async (maxAmountToInvest, stockInputValues) => {
     printSummary(maxAmountToInvest, stocks, totalCombined)
 }
 
-const form = document.querySelector('#form')
 
 // User submits input (Event listener block)
+const form = document.querySelector('#form')
+
 form.addEventListener('submit', e => {
     e.preventDefault()
 
-    const maxAmountToInvest = parseFloat(document.querySelector('#maxAmountToInvestDOM').value.replace(',', ''))
-    console.log(maxAmountToInvest)
+    const maxAmountToInvest = parseFloat(document.querySelector('#maxAmountToInvestEl').value.replace(',', ''))
     const stocksInputGroups = document.querySelectorAll('.stock-input-group')
 
     // Store user input in stocks array
@@ -28,55 +33,13 @@ form.addEventListener('submit', e => {
 
 // Add another stock
 const addStockBtn = document.querySelector('#addStockBtn')
-const stockInputContainer = document.querySelector('#stockInputContainer')
-
-
 addStockBtn.addEventListener('click', e => {
     e.preventDefault()
-
-    const stocksInputGroups = document.querySelectorAll('.stock-input-group')
-    const newStockInputGroupEl = document.createElement('div')
-    newStockInputGroupEl.classList.add('stock-input-group')
-    newStockInputGroupEl.innerHTML = `<div>${stocksInputGroups.length + 1}.</div><input class="stock-symbol" type="text" maxlength="5">
-    <div>
-        <label><input class="stock-checkbox" type="checkbox">Yes</label>
-    </div>
-    <div class="input-container input-container__allocation"> 
-        <input class="stock-allocation input input__allocation" type="number" min="1" max="99">
-    </div>
-    <div class="input-container input-container__money"> 
-        <input class="stock-amount input input__money" type="number" step=".01">
-    </div>`
-    
-    const removeButton = document.createElement('button')
-    removeButton.textContent = '-'
-
-    removeButton.addEventListener('click', e => {
-        stockInputContainer.removeChild(newStockInputGroupEl)
-    })
-
-    newStockInputGroupEl.appendChild(removeButton)
-    stockInputContainer.appendChild(newStockInputGroupEl)
+    addStockInputGroup()
 })
 
-// Allow only letter characters in simple input (and backspace, tab, enter)
-const symbolInputEls = document.querySelectorAll('.input__symbol')
-symbolInputEls.forEach(input => {
-    input.addEventListener('keydown', e => {
-        if (e.keyCode < 65 && e.keyCode !== 8 && e.keyCode !== 9 && e.keyCode !== 13 || e.keyCode > 90) {
-            e.preventDefault()
-        }
-    })
-})
-
-// Format money input fields using Autonumeric
-const moneyInputEls = document.querySelectorAll('.input__money')
-moneyInputEls.forEach(input => {
-    new AutoNumeric(input, {
-        emptyInputBehavior: "zero",
-        minimumValue: "0"
-    })
-})
+// Format max amount input field using Autonumeric
+formatAmountInput(document.querySelector('#maxAmountToInvestEl'))
 
 // Format allocation fields using Autonumeric
 const allocationInputEls = document.querySelectorAll('.input__allocation')
