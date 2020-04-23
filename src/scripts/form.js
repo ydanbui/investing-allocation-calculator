@@ -152,6 +152,43 @@ const addRemoveBtn = (stockInputContainer, newStockInputGroupEl) => {
     removeBtn.textContent = '-'
 
     removeBtn.addEventListener('click', e => {
+        const stocksInputGroupsNodeList = document.querySelectorAll('.stock-input-group')
+        const stockInputGroups = Array.from(stocksInputGroupsNodeList)
+        const allocationInputs = document.querySelectorAll('.input__allocation')
+        
+        // Get the index of the stock that is removed
+        const stockIndex = stockInputGroups.findIndex(inputGroup => inputGroup === newStockInputGroupEl)
+        
+        // Remove it's corresponding allocation AutoNumeric from the autonum array
+        allocationAutoNumArr.splice(stockIndex, 1)
+
+        // If there are 3 stocks and we are deleting the third
+        if (stockInputGroups.length === 3) {
+            // Make the first allocation field change the 2nd field
+            allocationInputs[0].addEventListener('keyup', setAllocation2ndStock)
+            // Remove the old allocation setter on the 2nd field
+            allocationInputs[1].removeEventListener('keyup', setAllocationLastStock)
+            // Make the 2nd allocation field change the first field
+            allocationInputs[1].addEventListener('keyup', setAllocation1stStock)
+            
+        // If there are 4 or more stocks
+
+        // If we are remocing the last stock
+        } else if (stockIndex === stockInputGroups.length -1) {
+            // Remove the setAllocLast stock from the 2nd to last input
+            allocationInputs[stockIndex - 1].removeEventListener('keyup', setAllocationLastStock)
+            allocationInputs[stockIndex - 1].addEventListener('keyup', setAllocationPenultStock)
+
+            // Add event listener to what will become new second to last stock
+            allocationInputs[stockIndex - 2].addEventListener('keyup', setAllocationLastStock)
+        
+        // If we are removing the second to last stock
+        } else if (stockIndex === stockInputGroups.length - 2) {
+            // Add event listener to what will become new second to last stock
+            allocationInputs[stockIndex - 1].addEventListener('keyup', setAllocationLastStock)
+        }
+                
+        // Remove the input group
         stockInputContainer.removeChild(newStockInputGroupEl)
     })
 
