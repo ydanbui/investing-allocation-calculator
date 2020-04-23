@@ -2,20 +2,38 @@ import AutoNumeric from 'autonumeric'
 
 const allocationAutoNumArr = []
 
-const setAllocation1stStock = () => {
-    // When there are two stocks
-    // If there are just two stocks the remaining allocation is just 100 - the current allocation
-    const remainingAllocation = 100 - document.querySelectorAll('.input__allocation')[1].value // allocation of 2nd stock
-    // Set the allocation of the previous (first) stock to add to 100
-    allocationAutoNumArr[0].set(remainingAllocation)
-}
+// Reset event listeners to change allocation values in response to user input
+// Called after the new stock is added
+const configureAllocationInputs = () => {
+    const allocationInputEls = document.querySelectorAll('.input__allocation')
+    const numStocks = allocationInputEls.length
 
-const setAllocation2ndStock = () => {
-    // When there are two stocks
-    // If there are just two stocks the remaining allocation is just 100 - the current allocation
-    const remainingAllocation = 100 - document.querySelectorAll('.input__allocation')[0].value // allocation of first stock
-    // Set the allocation of 2nd stock
-    allocationAutoNumArr[1].set(remainingAllocation)
+    // Skip event listener code until the two stock inputs have been initialized
+    if (numStocks < 2) {
+        return
+    }
+
+    // Loop through each allocation input
+    // Remove old allocation setting event listeners if they exist
+    // Add new event listeners to the now last and second to last stocks
+    allocationInputEls.forEach((input, index) => {
+        // Remove event listener on the now 3rd to last stock but was formerly the second to last
+        if (index === numStocks - 3) {
+            input.removeEventListener('keyup', setAllocationLastStock)
+        
+        // For the the now 2nd to last stock but was formerly last stock
+        } else if (index === numStocks - 2) {
+            // Remove old event listner
+            input.removeEventListener('keyup', setAllocationPenultStock)
+
+            // Add new event lister change the last stock's allocation
+            input.addEventListener('keyup', setAllocationLastStock)
+
+        // If it's the last stock, change the previous allocation so it sums to 100 when we change the last allocation
+        } else if (index === numStocks - 1) {
+            input.addEventListener('keyup', setAllocationPenultStock)
+        }
+    })
 }
 
 const setAllocationPenultStock = () => {
@@ -39,7 +57,6 @@ const setAllocationPenultStock = () => {
 }
 
 const setAllocationLastStock = () => {
-    console.log('set alloc last stodk')
     const allocationInputEls = document.querySelectorAll('.input__allocation')
     const allocationInputsArr = Array.from(allocationInputEls)
     const numStocks = allocationInputEls.length
@@ -84,66 +101,18 @@ const addStockInputGroup = () => {
         newStockInputGroupEl.appendChild(addRemoveBtn(stockInputContainer, newStockInputGroupEl))
     }
 
+    // Render the new stock input group
     stockInputContainer.appendChild(newStockInputGroupEl)
 
     // Format input fields
     formatSymbolInput(newStockInputGroupEl.querySelector('.input__symbol'))
     formatAmountInput(newStockInputGroupEl.querySelector('.input__money'))
 
-
-
-    // ALLOCATION FIELD BEHAVIOR
-    const allocationInputEls = document.querySelectorAll('.input__allocation')
-    // const allocationAutoNumArr = []
-    const numStocks = allocationInputEls.length
-
-    // When there are only the initial two stocks
-    if (numStocks === 2 ) {
-        allocationInputEls.forEach((input, index) => {
-            // Format the two allocation fields
-            // Store new AutoNumerics in the array
-            allocationAutoNumArr[index] = formatAllocationInput(input)
-            
-            // If the input is the last stock,
-            if (index === 1) {
-                // When user edits last stock alloc, change the first stock allocation
-                input.addEventListener('keyup', setAllocation1stStock)
-            } else {
-            // the input is the first stock
-                // When user edits first stock alloc, change the second stock alloc
-                input.addEventListener('keyup', setAllocation2ndStock)
-            }
-        })
-
-    // When we add additional stocks to the initial 2
-    } else if (numStocks > 2) {
-        // Format the new allocation field
-
-        // Add new Autonumeric to array
-        allocationAutoNumArr[stocksInputGroups.length] = formatAllocationInput(newStockInputGroupEl.querySelector('.input__allocation'))
-
-        allocationInputEls.forEach((input, index) => {
-            // remove original initialized event listeners to set allocation when we add a 3rd stock
-            if (numStocks === 3 && index <= 1) {
-                input.removeEventListener('keyup', setAllocation1stStock)
-                input.removeEventListener('keyup', setAllocation2ndStock)
-            } else if (numStocks > 3) {
-                if (index === numStocks - 3) {
-                    input.removeEventListener('keyup', setAllocationLastStock)
-                } else if (index === numStocks - 2) {
-                    input.removeEventListener('keyup', setAllocationPenultStock)
-                }
-            }
-
-            // If it's the last stock, change the previous allocation so it sums to 100 when we change the last allocation
-            if (index === numStocks - 1) {
-                input.addEventListener('keyup', setAllocationPenultStock)
-            } else if (index === numStocks - 2){
-                // If it's the second to last stock, change the last stock's allocation so the total sums to 100
-                input.addEventListener('keyup', setAllocationLastStock)
-            }
-        })
-    }
+    // Format the new allocation field and store new Autonumeric in array
+    allocationAutoNumArr[stocksInputGroups.length] = formatAllocationInput(newStockInputGroupEl.querySelector('.input__allocation'))
+    
+    // Add and remove (if necessary) even handlers
+    configureAllocationInputs()
 }
 
 // Add remove button to stock input group
@@ -165,11 +134,11 @@ const addRemoveBtn = (stockInputContainer, newStockInputGroupEl) => {
         // If there are 3 stocks and we are deleting the third
         if (stockInputGroups.length === 3) {
             // Make the first allocation field change the 2nd field
-            allocationInputs[0].addEventListener('keyup', setAllocation2ndStock)
+            allocationInputs[0].addEventListener('keyup', setAllocationLastStock)
             // Remove the old allocation setter on the 2nd field
             allocationInputs[1].removeEventListener('keyup', setAllocationLastStock)
             // Make the 2nd allocation field change the first field
-            allocationInputs[1].addEventListener('keyup', setAllocation1stStock)
+            allocationInputs[1].addEventListener('keyup', setAllocationPenultStock)
             
         // If there are 4 or more stocks
 
