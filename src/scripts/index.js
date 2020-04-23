@@ -35,9 +35,9 @@ addStockBtn.addEventListener('click', e => {
     e.preventDefault()
 
     const stocksInputGroups = document.querySelectorAll('.stock-input-group')
-    const stockInputGroupEl = document.createElement('div')
-    stockInputGroupEl.classList.add('stock-input-group')
-    stockInputGroupEl.innerHTML = `<div>${stocksInputGroups.length + 1}.</div><input class="stock-symbol" type="text" maxlength="5">
+    const newStockInputGroupEl = document.createElement('div')
+    newStockInputGroupEl.classList.add('stock-input-group')
+    newStockInputGroupEl.innerHTML = `<div>${stocksInputGroups.length + 1}.</div><input class="stock-symbol" type="text" maxlength="5">
     <div>
         <label><input class="stock-checkbox" type="checkbox">Yes</label>
     </div>
@@ -52,11 +52,11 @@ addStockBtn.addEventListener('click', e => {
     removeButton.textContent = '-'
 
     removeButton.addEventListener('click', e => {
-        stockInputContainer.removeChild(stockInputGroupEl)
+        stockInputContainer.removeChild(newStockInputGroupEl)
     })
 
-    stockInputGroupEl.appendChild(removeButton)
-    stockInputContainer.appendChild(stockInputGroupEl)
+    newStockInputGroupEl.appendChild(removeButton)
+    stockInputContainer.appendChild(newStockInputGroupEl)
 })
 
 // Allow only letter characters in simple input (and backspace, tab, enter)
@@ -80,9 +80,9 @@ moneyInputEls.forEach(input => {
 
 // Format allocation fields using Autonumeric
 const allocationInputEls = document.querySelectorAll('.input__allocation')
-const allocationAutoNumArr = []
 const numStocks = allocationInputEls.length
 
+const allocationAutoNumArr = []
 allocationInputEls.forEach((input, index) => {
     allocationAutoNumArr[index] = new AutoNumeric(input, {
         decimalPlaces: 0,
@@ -115,6 +115,7 @@ allocationInputEls.forEach((input, index) => {
         // If it's the last stock, change the previous allocation so it sums to 100 when we change the last allocation
         if (index === numStocks - 1) {
             input.addEventListener('keyup', e => {
+                // Sum all the allocations besides the last two stocks
                 const sumOfPrevAllocations = allocationInputsArr.reduce((total, allocInput, ind) => {
                     if (ind < numStocks - 2) {
                         return total + parseFloat(allocInput.value)
@@ -124,12 +125,14 @@ allocationInputEls.forEach((input, index) => {
                 }, 0)
 
                 const remainingAllocation = 100 - input.value - sumOfPrevAllocations
-                // Set the allocation of the previous stock to add to 100
+                // Set the allocation of the second to last (previous) stock to add to 100
                 allocationAutoNumArr[index - 1].set(remainingAllocation)
             })
         } else if (index === numStocks - 2){
-            // If it's the second to last stock, change the last stock's allocation so they sum to 100
+
+            // If it's the second to last stock, change the last stock's allocation so the total sums to 100
             input.addEventListener('keyup', e => {
+                // Sum all the allocations beside the last one
                 const sumOfPrevAllocations = allocationInputsArr.reduce((total, allocInput, ind) => {
                     if (ind < numStocks - 1) {
                         return total + parseFloat(allocInput.value)
@@ -139,7 +142,8 @@ allocationInputEls.forEach((input, index) => {
                 }, 0)
 
                 const remainingAllocation = 100 - sumOfPrevAllocations
-                // Set the allocation of the next stock to add to 100
+
+                // Set the allocation of the last stock to add to 100
                 allocationAutoNumArr[index + 1].set(remainingAllocation)
             })
         }
