@@ -158,7 +158,9 @@ const addRemoveBtn = (stockInputContainer, newStockInputGroupEl) => {
         allocationAutoNumArr.splice(indexToRemove, 1)
 
         // Remove it's corresponding flags from the validator object arrays
-        // inputValidator.splice(indexToRemove, 1)
+        inputValidator.symbol.splice(indexToRemove, 1)
+        inputValidator.allocation.splice(indexToRemove, 1)
+        console.log(inputValidator)
 
             
         // If we are remocing the last stock
