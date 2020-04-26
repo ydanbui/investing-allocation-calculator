@@ -1,10 +1,11 @@
 import isEmpty from 'validator/lib/isEmpty';
+import validator from 'validator';
 
 // Initialize validator with initial form values
 const inputValidator = {
     maxAmount: false,
-    symbol: [true, true],
-    allocation: [true, true]
+    symbol: [],
+    allocation: []
 }
 
 // Check if field is empty
@@ -27,18 +28,38 @@ const hideErrorText = (input) => {
     errorEl.textContent = ''
 }
 
-const addValidator = (input, validatorProp, message) => {
+// Add event listeners to validate and error handling
+const addValidator = (input, validatorProp, message, index) => {
     input.addEventListener('input', function() {
-        inputValidator[validatorProp] = !checkIfEmpty(this)
+        // Add flag to validator object if field is not empty
+
+        // If the input field is symbo or allocation
+        if (validatorProp !== 'maxAmount') {
+            // Change the correct flag in the array if field is not empy
+            inputValidator[validatorProp][index] = !checkIfEmpty(this)
+        // Else if it is the max amount field, change the flag in the object
+        } else {
+            inputValidator[validatorProp] = !checkIfEmpty(this)
+        }
+        // Do not show error text if field is not empty
         if (!checkIfEmpty(this)) {
             hideErrorText(this)
         }
     })
+
     input.addEventListener('blur', function() {
+        // Show error text if field is empty on blur
         if (checkIfEmpty(this)) {
             showErrorText(this, message)
         }
     })
+
+    // if (validatorProp === 'allocation') {
+    //     input.addEventListener('change', () => {
+    //         console.log('change')
+    //         // inputValidator[validatorProp][index] = !checkIfEmpty(this)
+    //     })
+    // }
 }
 
 const checkFormValid = () => {

@@ -1,5 +1,5 @@
 import AutoNumeric from 'autonumeric'
-import { checkIfEmpty } from './validate'
+import { checkIfEmpty, inputValidator, addValidator } from './validate'
 
 const allocationAutoNumArr = []
 
@@ -37,7 +37,8 @@ const configureAllocationInputs = () => {
     })
 }
 
-const setAllocationPenultStock = () => {
+const setAllocationPenultStock = function() {
+    // debugger
     const allocationInputEls = document.querySelectorAll('.input__allocation')
     const allocationInputsArr = Array.from(allocationInputEls)
     const numStocks = allocationInputEls.length
@@ -55,6 +56,9 @@ const setAllocationPenultStock = () => {
     const remainingAllocation = 100 - document.querySelectorAll('.input__allocation')[numStocks - 1].value - sumOfPrevAllocations
     // Set the allocation of the second to last (previous) stock to add to 100
     allocationAutoNumArr[numStocks - 2].set(remainingAllocation)
+    
+    // Set flag for allocation field that is being set
+    inputValidator.allocation[numStocks - 2] = true 
 }
 
 const setAllocationLastStock = () => {
@@ -75,6 +79,9 @@ const setAllocationLastStock = () => {
 
     // Set the allocation of the last stock to add to 100
     allocationAutoNumArr[numStocks - 1].set(remainingAllocation)
+    
+    // Set flag for allocation field that is being set
+    inputValidator.allocation[numStocks - 1] = true 
 }
 
 const addStockInputGroup = () => {
@@ -120,16 +127,18 @@ const addStockInputGroup = () => {
     // Add and remove (if necessary) even handlers
     configureAllocationInputs()
 
-    // Add field validation
-    // Add validation on blur event to max amount filed
-    newStockInputGroupEl.querySelector('#stockSymbol').addEventListener('blur', function () {
-        checkIfEmpty(this, 'empty')
-    })
-
-    // Add validation on blur event to Allocation field
-    newStockInputGroupEl.querySelector('.input__allocation').addEventListener('blur', function () {
-        checkIfEmpty(this, 'empty')
-    })
+    // Add validation to symbol input
+    // Add a flag for this field to the validator object
+    inputValidator.symbol[stocksInputGroups.length] = false
+    addValidator(newStockInputGroupEl.querySelector('#stockSymbol'), 'symbol', 'empty', stocksInputGroups.length)
+    
+    
+    // Add validation to Allocation field
+    inputValidator.allocation[stocksInputGroups.length] = false
+    addValidator(newStockInputGroupEl.querySelector('.input__allocation'), 'allocation', 'empty', stocksInputGroups.length)
+    // newStockInputGroupEl.querySelector('.input__allocation').addEventListener('blur', function () {
+    //     checkIfEmpty(this, 'empty')
+    // })
 }
 
 // Add remove button to stock input group
@@ -147,6 +156,10 @@ const addRemoveBtn = (stockInputContainer, newStockInputGroupEl) => {
         
         // Remove it's corresponding allocation AutoNumeric from the autonum array
         allocationAutoNumArr.splice(indexToRemove, 1)
+
+        // Remove it's corresponding flags from the validator object arrays
+        // inputValidator.splice(indexToRemove, 1)
+
             
         // If we are remocing the last stock
         if (indexToRemove === stockInputGroups.length -1) {
