@@ -73,7 +73,9 @@ const calculateInvestment = (maxAmountToInvest, stocks) => {
 
     // Calculate the starting percentage of each stock
     stocks.forEach(stock => {
-        stock.percent = stock.amount / totalCombined
+        // If starting amount of all stocks are 0, set the percent ot be 0
+        // Have to manually set it otherwise 0 / 0 is NaN which breaks app
+        stock.percent = totalCombined === 0 ? 0 : stock.amount / totalCombined
     })
 
     // Create array of functions that generate the while loop for each stock
