@@ -1,5 +1,5 @@
 import AutoNumeric from 'autonumeric'
-import { checkIfEmpty, inputValidator, addValidator } from './validate'
+import {  checkFormValid, checkIfEmpty, inputValidator, addValidator } from './validate'
 
 const allocationAutoNumArr = []
 
@@ -20,19 +20,19 @@ const configureAllocationInputs = () => {
     allocationInputEls.forEach((input, index) => {
         // Remove event listener on the now 3rd to last stock but was formerly the second to last
         if (index === numStocks - 3) {
-            input.removeEventListener('keyup', setAllocationLastStock)
+            input.removeEventListener('input', setAllocationLastStock)
         
         // For the the now 2nd to last stock but was formerly last stock
         } else if (index === numStocks - 2) {
             // Remove old event listner
-            input.removeEventListener('keyup', setAllocationPenultStock)
+            input.removeEventListener('input', setAllocationPenultStock)
 
             // Add new event lister change the last stock's allocation
-            input.addEventListener('keyup', setAllocationLastStock)
+            input.addEventListener('input', setAllocationLastStock)
 
         // If it's the last stock, change the previous allocation so it sums to 100 when we change the last allocation
         } else if (index === numStocks - 1) {
-            input.addEventListener('keyup', setAllocationPenultStock)
+            input.addEventListener('input', setAllocationPenultStock)
         }
     })
 }
@@ -81,6 +81,7 @@ const setAllocationLastStock = () => {
     allocationAutoNumArr[numStocks - 1].set(remainingAllocation)
     
     // Set flag for allocation field that is being set
+    console.log('set allocation')
     inputValidator.allocation[numStocks - 1] = true 
 }
 
@@ -166,20 +167,24 @@ const addRemoveBtn = (stockInputContainer, newStockInputGroupEl) => {
         // If we are remocing the last stock
         if (indexToRemove === stockInputGroups.length -1) {
             // Remove the old allocation setter on the 2nd to last input
-            allocationInputs[indexToRemove - 1].removeEventListener('keyup', setAllocationLastStock)
+            allocationInputs[indexToRemove - 1].removeEventListener('input', setAllocationLastStock)
             // Make the 2nd to last (now last) alloc field change the new 2nd to last field
-            allocationInputs[indexToRemove - 1].addEventListener('keyup', setAllocationPenultStock)
+            allocationInputs[indexToRemove - 1].addEventListener('input', setAllocationPenultStock)
             // Make the what will become new second to last field change the new last field
-            allocationInputs[indexToRemove - 2].addEventListener('keyup', setAllocationLastStock)
+            allocationInputs[indexToRemove - 2].addEventListener('input', setAllocationLastStock)
         
         // If we are removing the second to last stock
         } else if (indexToRemove === stockInputGroups.length - 2) {
             // Add event listener to what will become new second to last stock
-            allocationInputs[indexToRemove - 1].addEventListener('keyup', setAllocationLastStock)
+            allocationInputs[indexToRemove - 1].addEventListener('input', setAllocationLastStock)
         }
                 
         // Remove the input group
         stockInputContainer.removeChild(newStockInputGroupEl)
+
+        // Check if button should be disabled and set it
+        submitBtn.disabled = !checkFormValid()
+
     })
     
     return removeBtn

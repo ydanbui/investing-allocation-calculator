@@ -3,7 +3,7 @@ import "regenerator-runtime/runtime"
 import {fetchStockPrices, createStocksArray} from './stock'
 import calculateInvestment, { printSummary } from './calculator'
 import { addStockInputGroup, formatAmountInput } from './form'
-import { checkIfEmpty, inputValidator, showErrorText, hideErrorText, addValidator } from './validate'
+import { checkFormValid, checkIfEmpty, inputValidator, showErrorText, hideErrorText, addValidator } from './validate'
 import validator from "validator"
 
 const maxAmountToInvestEl = document.querySelector('#maxAmountToInvestEl')
@@ -34,9 +34,13 @@ form.addEventListener('submit', e => {
 
 // Add another stock
 const addStockBtn = document.querySelector('#addStockBtn')
+const submitBtn = document.querySelector('#submitBtn')
 addStockBtn.addEventListener('click', e => {
     e.preventDefault()
     addStockInputGroup()
+
+    // Disable button when we add a new stock (fields are empty)
+    submitBtn.disabled = !checkFormValid()
 })
 
 // Format max amount input field using Autonumeric
