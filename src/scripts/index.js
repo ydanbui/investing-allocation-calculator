@@ -3,6 +3,9 @@ import "regenerator-runtime/runtime"
 import {fetchStockPrices, createStocksArray} from './stock'
 import calculateInvestment, { printSummary } from './calculator'
 import { addStockInputGroup, formatAmountInput } from './form'
+import { validateIfEmpty } from './validate'
+
+const maxAmountToInvestEl = document.querySelector('#maxAmountToInvestEl')
 
 addStockInputGroup()
 addStockInputGroup()
@@ -13,14 +16,13 @@ const runProgram = async (maxAmountToInvest, stockInputValues) => {
     printSummary(maxAmountToInvest, stocks, totalCombined)
 }
 
-
 // User submits input (Event listener block)
 const form = document.querySelector('#form')
 
 form.addEventListener('submit', e => {
     e.preventDefault()
 
-    const maxAmountToInvest = parseFloat(document.querySelector('#maxAmountToInvestEl').value.replace(',', ''))
+    const maxAmountToInvest = parseFloat(maxAmountToInvestEl.value.replace(',', ''))
     const stocksInputGroups = document.querySelectorAll('.stock-input-group')
 
     // Store user input in stocks array
@@ -37,4 +39,9 @@ addStockBtn.addEventListener('click', e => {
 })
 
 // Format max amount input field using Autonumeric
-formatAmountInput(document.querySelector('#maxAmountToInvestEl'))
+formatAmountInput(maxAmountToInvestEl)
+
+// Validate max amount field on blur
+maxAmountToInvestEl.addEventListener('blur', function() {
+    validateIfEmpty(this, 'empty')
+})

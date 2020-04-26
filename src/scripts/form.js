@@ -1,4 +1,5 @@
 import AutoNumeric from 'autonumeric'
+import { validateIfEmpty } from './validate'
 
 const allocationAutoNumArr = []
 
@@ -84,15 +85,20 @@ const addStockInputGroup = () => {
     newStockInputGroupEl.classList.add('stock-input-group')
     newStockInputGroupEl.innerHTML = `
         <div>${stocksInputGroups.length + 1}.</div>
-        <input id="stockSymbol" class="input input__symbol" type="text" maxlength="5">
+        <div>
+            <input id="stockSymbol" class="input input__symbol" type="text" maxlength="5">
+            <div class="input__error"></div>
+        </div>
         <div>
             <label><input class="stock-checkbox" type="checkbox">Yes</label>
         </div>
         <div class="input-container input-container__allocation"> 
             <input class="stock-allocation input input__allocation" type="text">
+            <div class="input__error"></div>
         </div>
         <div class="input-container input-container__money"> 
             <input id="stockAmount" class="input input__money" type="text">
+            <div class="input__error"></div>
         </div>
     `
 
@@ -113,6 +119,17 @@ const addStockInputGroup = () => {
     
     // Add and remove (if necessary) even handlers
     configureAllocationInputs()
+
+    // Add field validation
+    // Add validation on blur event to max amount filed
+    newStockInputGroupEl.querySelector('#stockSymbol').addEventListener('blur', function () {
+        validateIfEmpty(this, 'empty')
+    })
+
+    // Add validation on blur event to Allocation field
+    newStockInputGroupEl.querySelector('.input__allocation').addEventListener('blur', function () {
+        validateIfEmpty(this, 'empty')
+    })
 }
 
 // Add remove button to stock input group

@@ -13,9 +13,10 @@
     <p>Use this Investment allocation calculator to...</p>
 
     <form id="form" action="">
+        <label for="">Max amount to invest</label>
         <div class="input-container input-container__money"> 
-            <label for="">Max amount to invest</label>
             <input id="maxAmountToInvestEl" class="max-amount input input__money" type="text" placeholder="Enter amount">
+            <div class="input__error"></div>
         </div>
         <div class="row">
             <label for="">Stock</label>
@@ -52,7 +53,7 @@
                 </div>
             </div> -->
         </div>
-        <button type="submit">Calculate</button>
+        <button id="submitBtn" type="submit" disabled="true">Calculate</button>
         <button id="addStockBtn">Add Stock</button>
     </form>
     <script src="./scripts/index-bundle.js"></script>

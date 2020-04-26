@@ -31,7 +31,7 @@
 .input-container__money::before {
   content: '$';
   position: absolute;
-  bottom: 0px;
+  top: 0px;
   left: 8px;
 }
 
@@ -42,7 +42,7 @@
 .input-container__allocation::after {
   content: '%';
   position: absolute;
-  bottom: 0px;
+  top: 0px;
   right: 8px;
 }
 
