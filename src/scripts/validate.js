@@ -84,8 +84,6 @@ const submitBtn = document.querySelector('#submitBtn')
 form.addEventListener('input', e => {
     // IF from is valid, button should not be disabled
     submitBtn.disabled = !checkFormValid()
-
-    console.log('form event')
 })
 
 export {checkFormValid, checkIfEmpty, inputValidator, showErrorText, hideErrorText, addValidator}
