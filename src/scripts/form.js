@@ -105,18 +105,18 @@ const addStockInputGroup = () => {
         <div>${stocksInputGroups.length + 1}.</div>
         <div>
             <input id="stockSymbol" class="input input__symbol" type="text" maxlength="5">
-            <div class="input__error"></div>
+            <div class="input__error-text"></div>
         </div>
         <div>
             <label><input class="stock-checkbox" type="checkbox">Yes</label>
         </div>
         <div class="input-container input-container__allocation"> 
             <input class="stock-allocation input input__allocation" type="text">
-            <div class="input__error"></div>
+            <div class="input__error-text"></div>
         </div>
         <div class="input-container input-container__money"> 
             <input id="stockAmount" class="input input__money" type="text">
-            <div class="input__error"></div>
+            <div class="input__error-text"></div>
         </div>
     `
 

@@ -58,4 +58,12 @@
   padding-right: 24px;
   text-align: right;
 }
+
+.input__error {
+  border: 2px solid red;
+}
+
+.input__error-text {
+  color: red;
+}
 /*# sourceMappingURL=main.css.map */

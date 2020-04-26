@@ -20,12 +20,17 @@ const checkIfEmpty = (input) => {
 const showErrorText = (input, message) => {
     const errorEl = input.nextElementSibling
     errorEl.textContent = message
-    console.log(message)
+
+    // Add error styling to input field
+    input.classList.add('input__error')
 }
 
 const hideErrorText = (input) => {
     const errorEl = input.nextElementSibling
     errorEl.textContent = ''
+
+    // Remove error styling from input field
+    input.classList.remove('input__error')
 }
 
 // Add event listeners to validate and error handling

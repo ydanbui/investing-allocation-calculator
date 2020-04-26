@@ -51,4 +51,12 @@
         padding-right: 24px;
         text-align: right;
     }
+
+    &__error {
+        border: 2px solid red;
+        
+        &-text {
+            color: red;
+        }
+    }
 }
