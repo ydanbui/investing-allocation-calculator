@@ -1,5 +1,5 @@
 import AutoNumeric from 'autonumeric'
-import {  checkFormValid, checkIfEmpty, inputValidator, addValidator } from './validate'
+import {  checkFormValid, checkIfEmpty, inputValidator, hideErrorText, addValidator } from './validate'
 
 const allocationAutoNumArr = []
 
@@ -54,8 +54,14 @@ const setAllocationPenultStock = function() {
 
     // 100 - value of current (last) stock - sum of all stocks besides last 2
     const remainingAllocation = 100 - document.querySelectorAll('.input__allocation')[numStocks - 1].value - sumOfPrevAllocations
+    
     // Set the allocation of the second to last (previous) stock to add to 100
     allocationAutoNumArr[numStocks - 2].set(remainingAllocation)
+
+    // When we set the allocation for the penult alloc field, remove the empty error text
+    if (!checkIfEmpty(allocationInputsArr[numStocks - 2])) {
+        hideErrorText(allocationInputsArr[numStocks - 2])
+    }
     
     // Set flag for allocation field that is being set
     inputValidator.allocation[numStocks - 2] = true 
@@ -79,9 +85,13 @@ const setAllocationLastStock = () => {
 
     // Set the allocation of the last stock to add to 100
     allocationAutoNumArr[numStocks - 1].set(remainingAllocation)
+
+     // When we set the allocation for the last alloc field, remove the empty error text
+     if (!checkIfEmpty(allocationInputsArr[numStocks - 1])) {
+        hideErrorText(allocationInputsArr[numStocks - 1])
+    }
     
     // Set flag for allocation field that is being set
-    console.log('set allocation')
     inputValidator.allocation[numStocks - 1] = true 
 }
 

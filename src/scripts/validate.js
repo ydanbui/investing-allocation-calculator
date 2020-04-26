@@ -53,13 +53,6 @@ const addValidator = (input, validatorProp, message, index) => {
             showErrorText(this, message)
         }
     })
-
-    // if (validatorProp === 'allocation') {
-    //     input.addEventListener('change', () => {
-    //         console.log('change')
-    //         // inputValidator[validatorProp][index] = !checkIfEmpty(this)
-    //     })
-    // }
 }
 
 const checkFormValid = () => {
