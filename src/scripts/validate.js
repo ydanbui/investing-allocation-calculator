@@ -1,36 +1,55 @@
 import isEmpty from 'validator/lib/isEmpty';
 
 // Initialize validator with initial form values
-const validator = {
+const inputValidator = {
     maxAmount: false,
-    symbol: [false, false],
-    allocation: [false, false]
+    symbol: [true, true],
+    allocation: [true, true]
 }
 
 // Check if field is empty
-const validateIfEmpty = (input, message) => {
-    const errorEl = input.nextElementSibling
+const checkIfEmpty = (input) => {
     if (input.value === '0.00' || isEmpty(input.value)) {
-        // console.dir(input)
-        // console.log(input.nextElementSibling)
-        // const errorEl = document.createElement('div')
-        errorEl.textContent = message
-        // input.insertAdjacentElement('afterend', errorEl)
-        console.log(message)
+        return true
     } else {
-        errorEl.textContent = ''
+        return false
     }
 }
 
+const showErrorText = (input, message) => {
+    const errorEl = input.nextElementSibling
+    errorEl.textContent = message
+    console.log(message)
+}
+
+const hideErrorText = (input) => {
+    const errorEl = input.nextElementSibling
+    errorEl.textContent = ''
+}
+
+const addValidator = (input, validatorProp, message) => {
+    input.addEventListener('input', function() {
+        inputValidator[validatorProp] = !checkIfEmpty(this)
+        if (!checkIfEmpty(this)) {
+            hideErrorText(this)
+        }
+    })
+    input.addEventListener('blur', function() {
+        if (checkIfEmpty(this)) {
+            showErrorText(this, message)
+        }
+    })
+}
+
 const checkFormValid = () => {
-    // Loop through validator object
-    for (const field in validator) {
+    // Loop through inputValidator object
+    for (const field in inputValidator) {
         // If there is a boolean value of false, return false
-        if (!validator[field]) {
+        if (!inputValidator[field]) {
             return false
 
         // If the  value is an array and one of the array elements is false
-        } else if (typeof validator[field] === 'object' && validator[field].some(element => !element)) {
+        } else if (typeof inputValidator[field] === 'object' && inputValidator[field].some(element => !element)) {
            return false
         }
     }
@@ -46,4 +65,4 @@ form.addEventListener('input', e => {
     submitBtn.disabled = !checkFormValid()
 })
 
-export {validateIfEmpty}
+export {checkIfEmpty, inputValidator, showErrorText, hideErrorText, addValidator}

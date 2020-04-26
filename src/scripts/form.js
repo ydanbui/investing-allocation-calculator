@@ -1,5 +1,5 @@
 import AutoNumeric from 'autonumeric'
-import { validateIfEmpty } from './validate'
+import { checkIfEmpty } from './validate'
 
 const allocationAutoNumArr = []
 
@@ -123,12 +123,12 @@ const addStockInputGroup = () => {
     // Add field validation
     // Add validation on blur event to max amount filed
     newStockInputGroupEl.querySelector('#stockSymbol').addEventListener('blur', function () {
-        validateIfEmpty(this, 'empty')
+        checkIfEmpty(this, 'empty')
     })
 
     // Add validation on blur event to Allocation field
     newStockInputGroupEl.querySelector('.input__allocation').addEventListener('blur', function () {
-        validateIfEmpty(this, 'empty')
+        checkIfEmpty(this, 'empty')
     })
 }
 

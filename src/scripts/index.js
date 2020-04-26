@@ -3,7 +3,8 @@ import "regenerator-runtime/runtime"
 import {fetchStockPrices, createStocksArray} from './stock'
 import calculateInvestment, { printSummary } from './calculator'
 import { addStockInputGroup, formatAmountInput } from './form'
-import { validateIfEmpty } from './validate'
+import { checkIfEmpty, inputValidator, showErrorText, hideErrorText, addValidator } from './validate'
+import validator from "validator"
 
 const maxAmountToInvestEl = document.querySelector('#maxAmountToInvestEl')
 
@@ -42,6 +43,16 @@ addStockBtn.addEventListener('click', e => {
 formatAmountInput(maxAmountToInvestEl)
 
 // Validate max amount field on blur
-maxAmountToInvestEl.addEventListener('blur', function() {
-    validateIfEmpty(this, 'empty')
-})
+// maxAmountToInvestEl.addEventListener('input', function() {
+//     inputValidator.maxAmount = !checkIfEmpty(this)
+//     if (!checkIfEmpty(this)) {
+//         hideErrorText(this)
+//     }
+// })
+// maxAmountToInvestEl.addEventListener('blur', function() {
+//     if (checkIfEmpty(this)) {
+//         showErrorText(this, 'empty')
+//     }
+// })
+
+addValidator(maxAmountToInvestEl, 'maxAmount', 'empty')
