@@ -71,6 +71,9 @@ const calculateInvestment = (maxAmountToInvest, stocks) => {
         return total + stock.amount
     }, 0)
 
+    // Store the total amount of current holdings
+    const originalTotal = totalCombined
+
     // Calculate the starting percentage of each stock
     stocks.forEach(stock => {
         // If starting amount of all stocks are 0, set the percent ot be 0
@@ -94,7 +97,7 @@ const calculateInvestment = (maxAmountToInvest, stocks) => {
         // Once we run out of money left to spend, stop
     } while (maxAmountToInvest > 0)
 
-    return totalCombined
+    return [originalTotal, totalCombined]
 }
 
 export {calculateInvestment as default}

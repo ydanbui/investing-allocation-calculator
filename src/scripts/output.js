@@ -1,4 +1,4 @@
-// Generate amount to invest html elements for each stock
+// Generate amount to invest html elements for called stock
 const generateAmountToBuyDOM = (stock) => {
     const investEl = document.createElement('div')
 
@@ -16,13 +16,24 @@ const generateAmountToBuyDOM = (stock) => {
     return investEl
 }
 
-// Generate updated holding html elements for each stock
-const generateUpdatedStockAmount = (stock) => {
+// Generate updated holding html elements for called stock
+const generateUpdatedStockAmountDOM = (stock) => {
     const holdingEl = document.createElement('div')
 
     holdingEl.innerHTML = `
         <span>${stock.symbol}</span>
         <span>$${stock.amount.toFixed(2)}(${(stock.percent * 100).toFixed(1)}%)</span>
+    `
+    return holdingEl
+}
+
+// Generate current holding html elements for called stock
+const generateOriginalStockAmountDOM = (stock, originalTotal) => {
+    const holdingEl = document.createElement('div')
+
+    holdingEl.innerHTML = `
+        <span>${stock.symbol}</span>
+        <span>$${stock.originalAmount.toFixed(2)}(${(stock.originalAmount / originalTotal * 100).toFixed(1)}%)</span>
     `
     return holdingEl
 }
@@ -36,7 +47,7 @@ const displayUpdatedHoldings = (stocks, totalCombined) => {
 
     // Display updated holding of each stock
     stocks.forEach((stock) => {
-        outputCard.appendChild(generateUpdatedStockAmount(stock))
+        outputCard.appendChild(generateUpdatedStockAmountDOM(stock))
     })
 
     const totalCombinedEl = document.createElement('div')
@@ -45,6 +56,26 @@ const displayUpdatedHoldings = (stocks, totalCombined) => {
     `
 
     outputCard.appendChild(totalCombinedEl)
+}
+
+// Display the current holdings results view
+const displayCurrentHoldings = (stocks, originalAmount) => {
+    const outputCard = document.querySelector('.output__card')
+    outputCard.innerHTML = `
+        <p>Your current holdings are</p>
+    `
+
+    // Display original holding of each stock
+    stocks.forEach((stock) => {
+        outputCard.appendChild(generateOriginalStockAmountDOM(stock, originalAmount))
+    })
+
+    const totalOriginalAmountEl = document.createElement('div')
+    totalOriginalAmountEl.innerHTML = `
+        <span>Total</span><span>$${originalAmount.toFixed(2)}</span>
+    `
+
+    outputCard.appendChild(totalOriginalAmountEl)
 }
 
 // Display/update the output card when calculation runs
@@ -81,7 +112,6 @@ const displayResults = (maxAmountToInvest, stocks, totalCombined) => {
     `
     outputCard.appendChild(totalSpentEl)
 
-
     console.log(`Total of $${totalSpent} spent out of $${maxAmountToInvest} max amount`)
     console.log('Updated holdings:')
 
@@ -92,4 +122,4 @@ const displayResults = (maxAmountToInvest, stocks, totalCombined) => {
     console.log(`$${totalCombined.toFixed(2)} Total`)
 }
 
-export {generateAmountToBuyDOM, displayResults, displayUpdatedHoldings}
+export {generateAmountToBuyDOM, displayResults, displayUpdatedHoldings, displayCurrentHoldings}

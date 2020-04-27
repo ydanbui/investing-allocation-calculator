@@ -3,7 +3,7 @@ import "regenerator-runtime/runtime"
 import {fetchStockPrices, createStocksArray} from './stock'
 import calculateInvestment from './calculator'
 import { addStockInputGroup, formatAmountInput } from './form'
-import {displayResults, displayUpdatedHoldings} from './output'
+import {displayResults, displayUpdatedHoldings, displayCurrentHoldings} from './output'
 import { checkFormValid, checkIfEmpty, inputValidator, showErrorText, hideErrorText, addValidator } from './validate'
 import validator from "validator"
 
@@ -14,9 +14,10 @@ addStockInputGroup()
 
 const runProgram = async (maxAmountToInvest, stockInputValues) => {
     const stocks = await fetchStockPrices(stockInputValues)
-    const totalCombined = calculateInvestment(maxAmountToInvest, stocks)
+    const [originalTotal, totalCombined] = calculateInvestment(maxAmountToInvest, stocks)
     displayResults(maxAmountToInvest, stocks, totalCombined)
     // displayUpdatedHoldings(stocks, totalCombined)
+    // displayCurrentHoldings(stocks, originalTotal)
 }
 
 // User submits input (Event listener block)

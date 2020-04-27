@@ -6,6 +6,7 @@ class Stock {
         this.price = null,
         this.allocation = allocation,
         this.amount = amount,
+        this.originalAmount = amount,
         this.percent = null,
         this.newShares = 0,
         this.mutualFund = mutualFund
