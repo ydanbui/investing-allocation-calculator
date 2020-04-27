@@ -97,32 +97,4 @@ const calculateInvestment = (maxAmountToInvest, stocks) => {
     return totalCombined
 }
 
-const printSummary = (maxAmountToInvest, stocks, totalCombined) => {
-    // =================== SUMMARY ===================
-    stocks.forEach((stock) => {
-        if (stock.mutualFund) {
-            console.log(`Buy $${stock.newShares} of ${stock.symbol} (Current Price: $${stock.price})`)
-        } else {
-            console.log(`Buy ${stock.newShares} ${stock.symbol} shares at $${stock.price} per share ($${stock.newShares * stock.price} total)`)
-        }
-    })
-
-    const totalSpent = stocks.reduce((total, stock) => {
-        if (stock.mutualFund) {
-            return total + (stock.newShares)
-        } else {
-            return total + (stock.newShares * stock.price)
-        }
-    }, 0)
-
-    console.log(`Total of $${totalSpent} spent out of $${maxAmountToInvest} max amount`)
-    console.log('Updated holdings:')
-
-    stocks.forEach(stock => {
-        console.log(`$${stock.amount.toFixed(2)} ${stock.symbol} (${(stock.percent * 100).toFixed(1)}%)`)
-    })
-
-    console.log(`$${totalCombined.toFixed(2)} Total`)
-}
-
-export {calculateInvestment as default, printSummary}
+export {calculateInvestment as default}

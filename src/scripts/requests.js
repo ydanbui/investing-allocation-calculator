@@ -20,15 +20,14 @@ const getLatestPrice = async (symbol) => {
 
     const data = await response.json()
     console.log(data.latestPrice)
-    console.log(typeof data.latestPrice)
-
+    console.log(`Latest Update: ${moment(data.latestUpdate)}`)
+    // console.log(typeof data.latestPrice)
 
     return data.latestPrice
 
     // Alphaadvantage 
     // return parseFloat(data["Time Series (5min)"][getLastTime()]['4. close'])
     // return parseFloat(data["Time Series (5min)"]["2020-04-17 16:00:00"]['4. close'])
-
 }
 
 // Get the last stock price time to retrieve the price from the JSON response

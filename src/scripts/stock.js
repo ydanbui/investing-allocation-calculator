@@ -30,7 +30,7 @@ const createStocksArray = (stocksInputGroups) => {
     const stockInputArr = []
 
     stocksInputGroups.forEach(stockInputGroup => {
-        const symbol = stockInputGroup.querySelector('#stockSymbol').value
+        const symbol = stockInputGroup.querySelector('#stockSymbol').value.toUpperCase()
         const allocation = parseFloat(stockInputGroup.querySelector('.stock-allocation').value) / 100
         const amount = parseFloat(stockInputGroup.querySelector('#stockAmount').value.replace(',', ''))
         const mutualFund = stockInputGroup.querySelector('.stock-checkbox').checked

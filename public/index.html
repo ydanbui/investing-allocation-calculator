@@ -9,53 +9,32 @@
     <title>Investing Allocation Calculator</title>
 </head>
 <body>
-    <h1>Investing Allocation Calculator</h1>
-    <p>Use this Investment allocation calculator to...</p>
-
-    <form id="form" action="">
-        <label for="">Max amount to invest</label>
-        <div class="input-container input-container__money"> 
-            <input id="maxAmountToInvestEl" class="max-amount input input__money" type="text" placeholder="Enter amount">
-            <div class="input__error-text"></div>
-        </div>
-        <div class="row">
-            <label for="">Stock</label>
-            <label for="">Symbol</label>
-            <label for="">Mutual Fund?</label>
-            <label for="">Allocation</label>
-            <label for="">Current Amount</label>
-        </div>
-        <div id="stockInputContainer">
-            <!-- <div class="stock-input-group">
-                <div>1.</div>
-                <input id="stockSymbol" class="input input__symbol" type="text" maxlength="5">
-                <div>
-                    <label><input class="stock-checkbox" type="checkbox">Yes</label>
-                </div>
-                <div class="input-container input-container__allocation"> 
-                    <input class="stock-allocation input input__allocation" type="text">
-                </div>
-                <div class="input-container input-container__money"> 
-                    <input id="stockAmount" class="input input__money" type="text">
-                </div>
+    <main>
+        <h1>Investing Allocation Calculator</h1>
+        <p>Use this Investment allocation calculator to...</p>
+    
+        <form id="form" action="">
+            <label for="">Max amount to invest</label>
+            <div class="input-container input-container__money"> 
+                <input id="maxAmountToInvestEl" class="max-amount input input__money" type="text" placeholder="Enter amount">
+                <div class="input__error-text"></div>
             </div>
-            <div class="stock-input-group">
-                <div>2.</div>
-                <input id="stockSymbol" class="input input__symbol" type="text" maxlength="5">
-                <div>
-                    <label><input class="stock-checkbox" type="checkbox">Yes</label>
-                </div>
-                <div class="input-container input-container__allocation"> 
-                    <input class="stock-allocation input input__allocation" type="text">
-                </div>
-                <div class="input-container input-container__money"> 
-                    <input id="stockAmount" class="input input__money" type="text">
-                </div>
-            </div> -->
-        </div>
-        <button id="submitBtn" type="submit" disabled="true">Calculate</button>
-        <button id="addStockBtn">Add Stock</button>
-    </form>
+            <div class="row">
+                <label for="">Stock</label>
+                <label for="">Symbol</label>
+                <label for="">Mutual Fund?</label>
+                <label for="">Allocation</label>
+                <label for="">Current Amount</label>
+            </div>
+            <div id="stockInputContainer"></div>
+            <button id="submitBtn" type="submit" disabled="true">Calculate</button>
+            <button id="addStockBtn">Add Stock</button>
+        </form>
+    </main>
+    <section class="output">
+        <div class="output__card"></div>
+        <div class="output__note"></div>
+    </section>
     <script src="./scripts/index-bundle.js"></script>
 </body>
 </html>
