@@ -16,8 +16,20 @@ const runProgram = async (maxAmountToInvest, stockInputValues) => {
     const stocks = await fetchStockPrices(stockInputValues)
     const [originalTotal, totalCombined] = calculateInvestment(maxAmountToInvest, stocks)
     displayResults(maxAmountToInvest, stocks, totalCombined)
-    // displayUpdatedHoldings(stocks, totalCombined)
-    // displayCurrentHoldings(stocks, originalTotal)
+    
+    // Output tab behavior
+    // When results tab is clicked, display results card
+    document.querySelector('#resultsTab').addEventListener('click', e => {
+        displayResults(maxAmountToInvest, stocks, totalCombined)
+    })
+    // When updated holdings tab is clicked, display updated holdings card
+    document.querySelector('#updatedHoldingsTab').addEventListener('click', e => {
+        displayUpdatedHoldings(stocks, totalCombined)
+    })
+    // When current holdings tab is clicked, display current holdings card
+    document.querySelector('#currentHoldingsTab').addEventListener('click', e => {
+        displayCurrentHoldings(stocks, originalTotal)
+    })
 }
 
 // User submits input (Event listener block)
@@ -49,17 +61,5 @@ addStockBtn.addEventListener('click', e => {
 // Format max amount input field using Autonumeric
 formatAmountInput(maxAmountToInvestEl)
 
-// Validate max amount field on blur
-// maxAmountToInvestEl.addEventListener('input', function() {
-//     inputValidator.maxAmount = !checkIfEmpty(this)
-//     if (!checkIfEmpty(this)) {
-//         hideErrorText(this)
-//     }
-// })
-// maxAmountToInvestEl.addEventListener('blur', function() {
-//     if (checkIfEmpty(this)) {
-//         showErrorText(this, 'empty')
-//     }
-// })
-
+// Add event listeners to validate and error handling
 addValidator(maxAmountToInvestEl, 'maxAmount', 'empty')
