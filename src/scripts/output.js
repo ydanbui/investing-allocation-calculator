@@ -80,6 +80,9 @@ const displayCurrentHoldings = (stocks, originalAmount) => {
 
 // Display/update the output card when calculation runs
 const displayResults = (maxAmountToInvest, stocks, totalCombined) => {
+    // Stop hiding the output section
+    document.querySelector('.output').classList.remove('hide')
+    
     const outputCard = document.querySelector('.output__card')
     outputCard.innerHTML = `
         <p>You should invest</p>

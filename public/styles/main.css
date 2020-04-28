@@ -66,4 +66,12 @@
 .input__error-text {
   color: red;
 }
+
+.output {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
 /*# sourceMappingURL=main.css.map */
