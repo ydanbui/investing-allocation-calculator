@@ -33,17 +33,19 @@ const createWhileLoopFunctions = (stocks) => {
                 // If the allocation of the current fund is less than desired and there is still money to invest
                 if (stock.percent <= stock.allocation && maxAmountToInvest > 0) {
                     // Calculate amount of fund needed to buy to reach desired allocation
-                    const amountNeeded = (totalCombined + maxAmountToInvest) * stock.allocation - stock.amount
+                    // const amountNeeded = (totalCombined + maxAmountToInvest) * stock.allocation - stock.amount
+                    const amountNeeded = parseFloat(((totalCombined + maxAmountToInvest) * stock.allocation - stock.amount).toFixed(2))
                     
                     // If we have enough money to buy the amount needed
                     if (amountNeeded <= maxAmountToInvest) {
                         stock.amount += amountNeeded
                         stock.newShares += amountNeeded
                         totalCombined += amountNeeded
-                        maxAmountToInvest -= amountNeeded
+                        // maxAmountToInvest -= amountNeeded
+                        maxAmountToInvest = parseFloat((maxAmountToInvest - amountNeeded).toFixed(2))
+
+                    // If we don't have enough money to buy the amount needed
                     } else {
-                        // If we don't have enough money to buy the amount needed
-                        
                         // Buy the most we can with what we have left
                         stock.amount += maxAmountToInvest
                         stock.newShares += maxAmountToInvest
