@@ -40,14 +40,21 @@ const generateOriginalStockAmountDOM = (stock, originalTotal) => {
 
 // Display the updated holdings results view
 const displayUpdatedHoldings = (stocks, totalCombined) => {
+    // Array of data to be used to draw pie chart
+    const chartData = [['Stock', 'Amount']]
+
     const outputCard = document.querySelector('.output__card')
     outputCard.innerHTML = `
         <p>Your updated holdings will be</p>
+        <div id="chart_div"></div>
     `
 
     // Display updated holding of each stock
     stocks.forEach((stock) => {
         outputCard.appendChild(generateUpdatedStockAmountDOM(stock))
+        
+        // Store data of each stock for chart
+        chartData.push([stock.symbol, stock.amount])
     })
 
     const totalCombinedEl = document.createElement('div')
@@ -56,6 +63,11 @@ const displayUpdatedHoldings = (stocks, totalCombined) => {
     `
 
     outputCard.appendChild(totalCombinedEl)
+    // chartData.push([totalCombined])
+
+    // Draw google chart
+    google.charts.setOnLoadCallback(generateChart(chartData));
+
 }
 
 // Display the current holdings results view
@@ -124,5 +136,44 @@ const displayResults = (maxAmountToInvest, stocks, totalCombined) => {
 
     console.log(`$${totalCombined.toFixed(2)} Total`)
 }
+
+// CHART STUFF
+
+const generateChart = (chartData) => {
+    const dataArray = [ ['Stock', 'Amount'],
+        ['IVV', 11201.42],
+        ['IXUS', 12232.30]]
+
+    return function() {
+        // const data = google.visualization.arrayToDataTable(chartData);
+        const data = google.visualization.arrayToDataTable(dataArray);
+    
+        const options = {
+        //   title: 'My Daily Activities',
+          pieHole: 0.3,
+          legend: 'none',
+          colors: ['red', 'black', 'green'],
+          fontName: 'Open Sans',
+          chartArea:{left:0,top:0,width:'100%',height:'100%'},
+          height:300,
+          width: 400
+    
+        };
+    
+        const chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+  }
+// Chart TEsting
+// Load the Visualization API and the corechart package.
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(generateChart());
+
+ // Set a callback to run when the Google Visualization API is loaded.
+//  google.charts.setOnLoadCallback(drawChart);
+
+ // Callback that creates and populates a data table,
+ // instantiates the pie chart, passes in the data and
+ // draws it.
 
 export {generateAmountToBuyDOM, displayResults, displayUpdatedHoldings, displayCurrentHoldings}
