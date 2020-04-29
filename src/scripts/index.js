@@ -6,6 +6,9 @@ import { addStockInputGroup, formatAmountInput } from './form'
 import {displayResults, displayUpdatedHoldings, displayCurrentHoldings} from './output'
 import { checkFormValid, checkIfEmpty, inputValidator, showErrorText, hideErrorText, addValidator } from './validate'
 import validator from "validator"
+// Load the Visualization API and the corechart package.
+google.charts.load('current', {'packages':['corechart']});
+
 
 const maxAmountToInvestEl = document.querySelector('#maxAmountToInvestEl')
 
