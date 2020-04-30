@@ -5,41 +5,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@600&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles/main.css">
     <title>Investing Allocation Calculator</title>
 </head>
 <body>
-    <main>
-        <h1>Investing Allocation Calculator</h1>
-        <p>Use this Investment allocation calculator to...</p>
-    
-        <form id="form" action="">
-            <label for="">Max amount to invest</label>
-            <div class="input-container input-container__money"> 
-                <input id="maxAmountToInvestEl" class="max-amount input input__money" type="text" placeholder="Enter amount">
-                <div class="input__error-text"></div>
+    <div class="container">
+        <main>
+            <h1>Investing Allocation Calculator</h1>
+            <p>Use this Investment allocation calculator to...</p>
+        
+            <form id="form" action="">
+                <label for="">Max amount to invest</label>
+                <div class="input-container input-container__money"> 
+                    <input id="maxAmountToInvestEl" class="max-amount input input__money" type="text" placeholder="Enter amount">
+                    <div class="input__error-text"></div>
+                </div>
+                <div class="row">
+                    <label for="">Stock</label>
+                    <label for="">Symbol</label>
+                    <label for="">Mutual Fund?</label>
+                    <label for="">Allocation</label>
+                    <label for="">Current Amount</label>
+                </div>
+                <div id="stockInputContainer"></div>
+                <button id="submitBtn" type="submit" disabled="true">Calculate</button>
+                <button id="addStockBtn">Add Stock</button>
+            </form>
+        </main>
+        <section class="output hide">
+            <div class="output__container">
+                <div class="output__tabs">
+                    <button id="resultsTab" class="output__tab">Results</button>
+                    <button id="updatedHoldingsTab" class="output__tab">Updated Holdings</button>
+                    <button id="currentHoldingsTab" class="output__tab">Current Holdings</button>
+                </div>
+                <div class="output__card"></div>
             </div>
-            <div class="row">
-                <label for="">Stock</label>
-                <label for="">Symbol</label>
-                <label for="">Mutual Fund?</label>
-                <label for="">Allocation</label>
-                <label for="">Current Amount</label>
-            </div>
-            <div id="stockInputContainer"></div>
-            <button id="submitBtn" type="submit" disabled="true">Calculate</button>
-            <button id="addStockBtn">Add Stock</button>
-        </form>
-    </main>
-    <section class="output hide">
-        <div class="output__tabs">
-            <button id="resultsTab" class="output__tab">Results</button>
-            <button id="updatedHoldingsTab" class="output__tab">Updated Holdings</button>
-            <button id="currentHoldingsTab" class="output__tab">Current Holdings</button>
-        </div>
-        <div class="output__card"></div>
-        <div class="output__note"></div>
-    </section>
+            <div class="output__note"></div>
+        </section>
+    </div>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="./scripts/index-bundle.js"></script>
 </body>

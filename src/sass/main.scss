@@ -1,9 +1,29 @@
 @import 'variables';
 @import 'reset';
+@import 'grid';
 
 @import 'form';
 @import 'output';
 
 .hide {
     display: none;
+}
+
+body {
+    background-color: $color-primary;
+    background-image: url("https://www.transparenttextures.com/patterns/cross-stripes.png");
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+}
+
+.container {
+    display: flex;
+    padding: 104px; 
+}
+
+h1 {
+    font-family: 'Hind', sans-serif;
+    font-weight: 600;
+    font-size: 48px;
+    color: $color-offwhite;
 }

@@ -1,3 +1,11 @@
 .output {
     display: block;
+    flex: 1;
+
+    &__container {
+        background-color: black;
+    }
+
+    &__card {
+    }
 }
